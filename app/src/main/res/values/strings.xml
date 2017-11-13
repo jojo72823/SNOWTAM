@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Snowtam</string>
+    <string name="version">v. 17.11.13</string>
+    <string name="title_activity_maps">Map</string>
 </resources>
