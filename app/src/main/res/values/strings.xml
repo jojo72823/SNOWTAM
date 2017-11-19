@@ -2,4 +2,11 @@
     <string name="app_name">Snowtam</string>
     <string name="version">v. 17.11.13</string>
     <string name="title_activity_maps">Map</string>
+    <string name="add_ground">Add airport</string>
+    <string name="exit_app">You will exit the application. Do you keep on ?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="details">Details airport</string>
+    <string name="activityAddGround">Add airports</string>
+    <string name="activityResult">Visualisation snowtam</string>
 </resources>

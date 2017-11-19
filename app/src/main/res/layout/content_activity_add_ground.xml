@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:background="@color/colorPrimary"
+    android:background="@drawable/fond_petit"
     android:scrollbars="none"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="daumont.caspar.ensim.snowtam.Activities.ActivityAddGround">
@@ -18,7 +18,7 @@
         android:orientation="vertical">
 
         <ListView
-            android:id="@+id/listView"
+            android:id="@+id/listView_ground"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="50dp"

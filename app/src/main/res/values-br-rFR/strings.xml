@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Snowtam</string>
+    <string name="version">v. 17.11.13</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="add_ground">Ajouter un aéroport</string>
+    <string name="exit_app">Vous allez quitter l\'application. Voulez-vous continuer ?</string>
+    <string name="yes">Oui</string>
+    <string name="no">Non</string>
+    <string name="details">Détails snowtam</string>
+    <string name="activityAddGround">Ajouter des aéroports</string>
+    <string name="activityResult">Visualisation snowtam</string>
+
+</resources>

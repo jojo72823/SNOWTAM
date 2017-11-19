@@ -26,7 +26,6 @@ public class ActivityStart extends AppCompatActivity {
         //INITIALIZE
         activity = this;
 
-
         //LOADING
         if (Methods.internet_diponible_activity_start(this)) {
             new Handler().postDelayed(new Runnable() {
