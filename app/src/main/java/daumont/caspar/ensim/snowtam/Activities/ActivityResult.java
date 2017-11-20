@@ -73,6 +73,24 @@ public class ActivityResult extends AppCompatActivity {
     private String crypt = "";
     private String decrypt = "";
 
+    private String part_a;
+    private String part_b;
+    private String part_c;
+    private String part_d;
+    private String part_e;
+    private String part_f;
+    private String part_g;
+    private String part_h;
+    private String part_j;
+    private String part_k;
+    private String part_l;
+    private String part_m;
+    private String part_n;
+    private String part_p;
+    private String part_r;
+    private String part_s;
+    private String part_t;
+
 
 
 
@@ -293,24 +311,6 @@ public class ActivityResult extends AppCompatActivity {
                                        //TRAITEMENT
                                        if (data.indexOf("SNOWTAM ") != -1) {
                                            Toast.makeText(activity, "data = " + data, Toast.LENGTH_SHORT).show();
-
-                                           String part_a;
-                                           String part_b;
-                                           String part_c;
-                                           String part_d;
-                                           String part_e;
-                                           String part_f;
-                                           String part_g;
-                                           String part_h;
-                                           String part_j;
-                                           String part_k;
-                                           String part_l;
-                                           String part_m;
-                                           String part_n;
-                                           String part_p;
-                                           String part_r;
-                                           String part_s;
-                                           String part_t;
 
 
 
