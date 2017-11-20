@@ -10,7 +10,6 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,16 +21,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 
@@ -39,13 +33,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 import daumont.caspar.ensim.snowtam.Model.Ground;
-import daumont.caspar.ensim.snowtam.Model.GsonRequest;
 import daumont.caspar.ensim.snowtam.Model.ListGround;
-import daumont.caspar.ensim.snowtam.Model.List_notams;
 import daumont.caspar.ensim.snowtam.R;
 import daumont.caspar.ensim.snowtam.utils.Methods;
 
@@ -65,7 +56,6 @@ public class ActivityAddGround extends AppCompatActivity {
     private CollapsingToolbarLayout toolbar_layout;
     //ARRAYLIST
     private ArrayList<Ground> arraylist_list_ground;
-    private List_notams list_notams;
 
     //OTHER
     private Activity activity;
@@ -116,12 +106,18 @@ public class ActivityAddGround extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                listGround.addListGround(arraylist_list_ground);
-                Intent intent = new Intent(activity, ActivityResult.class);
-                intent.putExtra("listGround", new Gson().toJson(listGround));
-                startActivity(intent);
-                overridePendingTransition(R.anim.pull_in, R.anim.push_out);
-                finish();
+                if(arraylist_list_ground.size()==0){
+                    Methods.info_dialog(getString(R.string.list_empty),activity);
+                }else{
+                    listGround.addListGround(arraylist_list_ground);
+                    Intent intent = new Intent(activity, ActivityResult.class);
+                    intent.putExtra("listGround", new Gson().toJson(listGround));
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.pull_in, R.anim.push_out);
+                    finish();
+                }
+
+
 
             }
         });
@@ -131,6 +127,7 @@ public class ActivityAddGround extends AppCompatActivity {
                 add_ground();
             }
         });
+
 
 
 

@@ -100,8 +100,8 @@ public class ActivityResult extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar_layout.setTitle(getString(R.string.activityResult));
         mProgressDialog = new ProgressDialog(activity);
-        mProgressDialog.setTitle("Veuillez patienter");
-        mProgressDialog.setMessage("Connexion en cours...");
+        mProgressDialog.setTitle(getString(R.string.loading));
+        mProgressDialog.setMessage(getString(R.string.loading_subtitle));
         mProgressDialog.setCancelable(false);
         mProgressDialog.setIndeterminate(false);
 
@@ -300,6 +300,7 @@ public class ActivityResult extends AppCompatActivity {
                                        //TRAITEMENT
                                        if(data.indexOf("SNOWTAM ") !=-1){
                                            Toast.makeText(activity, "data = "+data, Toast.LENGTH_SHORT).show();
+
                                        }
 
 

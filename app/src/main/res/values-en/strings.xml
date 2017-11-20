@@ -10,5 +10,9 @@
     <string name="details">Détails snowtam</string>
     <string name="activityAddGround">Ajouter des aéroports</string>
     <string name="activityResult">Visualisation snowtam</string>
-
+    <string name="name">nom aéroport</string>
+    <string name="add">Ajouter</string>
+    <string name="list_empty">No airport</string>
+    <string name="loading">Please wait</string>
+    <string name="loading_subtitle">Loading</string>
 </resources>

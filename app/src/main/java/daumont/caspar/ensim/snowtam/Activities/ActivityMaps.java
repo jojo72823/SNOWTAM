@@ -1,10 +1,19 @@
 package daumont.caspar.ensim.snowtam.Activities;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -13,6 +22,13 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
+import daumont.caspar.ensim.snowtam.Model.Ground;
 import daumont.caspar.ensim.snowtam.Model.ListGround;
 import daumont.caspar.ensim.snowtam.R;
 import daumont.caspar.ensim.snowtam.utils.Methods;
@@ -23,6 +39,7 @@ public class ActivityMaps extends FragmentActivity implements OnMapReadyCallback
     private Activity activity;
 
     private ListGround list_ground;
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +53,12 @@ public class ActivityMaps extends FragmentActivity implements OnMapReadyCallback
                 list_ground = new Gson().fromJson(extras.getString("listGround"), ListGround.class);
             }
         }
+
+        mProgressDialog = new ProgressDialog(activity);
+        mProgressDialog.setTitle(getString(R.string.loading));
+        mProgressDialog.setMessage(getString(R.string.loading_subtitle));
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.setIndeterminate(false);
 
 
 
@@ -60,9 +83,12 @@ public class ActivityMaps extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        LatLng adress = new LatLng(67.2691667,14.3652778);
+        for(int cpt=0;cpt<list_ground.getListGround().size();cpt++){
+
+        }
+        mMap.addMarker(new MarkerOptions().position(adress).title("Marker in Sydney"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(adress));
     }
 
     @Override
@@ -80,4 +106,6 @@ public class ActivityMaps extends FragmentActivity implements OnMapReadyCallback
         }
 
     }
+
+
 }
