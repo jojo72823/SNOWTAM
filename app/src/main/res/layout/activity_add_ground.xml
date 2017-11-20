@@ -61,7 +61,7 @@
         app:layout_anchor="@id/app_bar"
         app:backgroundTint="@color/colorAccent"
         app:layout_anchorGravity="bottom|end"
-        app:srcCompat="@drawable/icon_menu" />
+        app:srcCompat="@drawable/icon_result" />
 
 
 

@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical|center_horizontal"
-        android:background="@color/colorAccent"
+        android:background="@color/colorPrimaryDark"
         android:elevation="10dp"
         android:gravity="center_vertical|center_horizontal"
         android:orientation="horizontal">
@@ -41,7 +41,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_weight="1"
-            android:background="@drawable/my_button"
+            android:background="@drawable/icon_close"
             android:foregroundGravity="center_vertical|center_horizontal"
             android:gravity="center_vertical" />
     </RelativeLayout>
@@ -55,10 +55,12 @@
             android:id="@+id/editText_ground_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="20dp"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+            android:inputType="textPersonName" />
 
         <Button
             android:id="@+id/button_add"
@@ -67,8 +69,12 @@
             android:layout_marginBottom="20dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="20dp"
-            android:text="Add" />
+            android:layout_marginTop="10dp"
+            android:background="@drawable/my_button"
+            android:text="@string/add"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
     </LinearLayout>
 
 
