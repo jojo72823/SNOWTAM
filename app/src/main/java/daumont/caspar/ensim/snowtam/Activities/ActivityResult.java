@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -20,15 +22,20 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import daumont.caspar.ensim.snowtam.Model.Ground;
 import daumont.caspar.ensim.snowtam.Model.ListGround;
 import daumont.caspar.ensim.snowtam.R;
 import daumont.caspar.ensim.snowtam.utils.Methods;
+
+import static android.R.id.list;
 
 public class ActivityResult extends AppCompatActivity {
 
@@ -104,6 +111,12 @@ public class ActivityResult extends AppCompatActivity {
                 finish();
             }
         });
+
+
+        Address address = Methods.getLatLngAddress(activity,"15 rue jacques Brel, 72700, spay, france");
+        double lat = address.getLatitude();
+        double lng = address.getLongitude();
+        Toast.makeText(activity, "lat = "+lat+" |lng = "+lng, Toast.LENGTH_SHORT).show();
 
     }
 

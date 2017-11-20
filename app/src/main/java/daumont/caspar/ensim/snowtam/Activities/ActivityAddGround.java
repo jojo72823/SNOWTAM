@@ -10,6 +10,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,12 +22,28 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 import daumont.caspar.ensim.snowtam.Model.Ground;
+import daumont.caspar.ensim.snowtam.Model.GsonRequest;
 import daumont.caspar.ensim.snowtam.Model.ListGround;
+import daumont.caspar.ensim.snowtam.Model.List_notams;
 import daumont.caspar.ensim.snowtam.R;
 import daumont.caspar.ensim.snowtam.utils.Methods;
 
@@ -46,6 +63,7 @@ public class ActivityAddGround extends AppCompatActivity {
     private CollapsingToolbarLayout toolbar_layout;
     //ARRAYLIST
     private ArrayList<Ground> arraylist_list_ground;
+    private List_notams list_notams;
 
     //OTHER
     private Activity activity;
@@ -110,8 +128,39 @@ public class ActivityAddGround extends AppCompatActivity {
             public void onClick(View v) {
                 add_ground();
 
+                /**TEST VOLLEY*/
+                RequestQueue queue;
+                GsonRequest<List_notams> gsonRequest;
+                queue = Volley.newRequestQueue(activity);
+                String url = "https://v4p4sz5ijk.execute-api.us-east-1.amazonaws.com/anbdata/states/notams/notams-list?api_key=72b1ee30-cdce-11e7-8f50-f15f214edab3&format=json&type=&Qcode=&locations=ENBO&qstring=&states=&ICAOonly=false";
+                gsonRequest = new GsonRequest<>(
+                        url, List_notams.class, null, new Response.Listener<List_notams>() {
+                    @Override
+                    public void onResponse(final List_notams response) {
+                        list_notams = response;
+                        Log.d("response ",response.getData().toString());
+                    }
+
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("error ",error.toString());
+                    }
+                });
+                queue.add(gsonRequest);
+
+
+
+
+
             }
         });
+
+
+
+
+
+
 
 
 

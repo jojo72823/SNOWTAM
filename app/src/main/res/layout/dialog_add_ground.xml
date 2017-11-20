@@ -41,36 +41,35 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_weight="1"
-            android:background="@android:drawable/ic_delete"
+            android:background="@drawable/my_button"
             android:foregroundGravity="center_vertical|center_horizontal"
             android:gravity="center_vertical" />
     </RelativeLayout>
 
-
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <EditText
+            android:id="@+id/editText_ground_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_margin="10dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Name" />
 
-            <EditText
-                android:id="@+id/editText_ground_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Name" />
-
-            <Button
-                android:id="@+id/button_add"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Add" />
-        </LinearLayout>
-    </ScrollView>
+        <Button
+            android:id="@+id/button_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="20dp"
+            android:text="Add" />
+    </LinearLayout>
 
 
 </LinearLayout>

@@ -5,8 +5,16 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
+import android.widget.Toast;
+
+import java.io.IOException;
+import java.util.List;
+
 import daumont.caspar.ensim.snowtam.Activities.ActivityStart;
 
 /**
@@ -80,6 +88,21 @@ public class Methods {
         builder.create();
         builder.show();
     }
+
+    public static Address getLatLngAddress(Activity activity,String locationName){
+        Geocoder gc = new Geocoder(activity);
+        List<Address> list;
+        Address address=null;
+        try{
+            list = gc.getFromLocationName(locationName, 1);
+           address = list.get(0);
+        }catch(IOException e){
+                Log.d("Error","getLatLngAddress : "+e);
+        }
+        return address;
+    }
+
+
 
 }
 
