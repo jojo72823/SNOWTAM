@@ -70,20 +70,8 @@ public class ActivityResult extends AppCompatActivity {
     private Activity activity;
     private MyCustomAdapterGround dataMyCustomAdapterGround;
 
-    private String crypt = "SWEN0492 ENBO 11151041 \n" +
-            "(SNOWTAM 0492\n" +
-            "A) ENBO\n" +
-            "B) 11151041 C) 07\n" +
-            "F) NIL/NIL/NIL H) 5/5/5\n" +
-            "N) ALPHA BRAVO CHARLIE DELTA/1  ECHO WHISKEY/NIL\n" +
-            "R) APRON EAST APRON WEST/2  RWY EXTENSION WEST/NIL)";
-    private String decrypt = "A) KJFK – NEW YORK KENNEDY\n" +
-            "B) 22 DECEMBER AT 09h45UTC\n" +
-            "C) RUNWAY 08L\n" +
-            "F) WET SNOW / WET SNOW / WET SNOW\n" +
-            "G) MEAN DEPTH 2mm / 2mm / 3mm\n" +
-            "H) BRAKING ACTION : MEDIUM TO POOR / POOR / POOR\n" +
-            "N) TAXIWAYS: WET SNOW";
+    private String crypt = "";
+    private String decrypt = "";
 
 
 
@@ -162,11 +150,11 @@ public class ActivityResult extends AppCompatActivity {
             if (Methods.internet_diponible(activity)) {
                 switch (item.getItemId()) {
                     case R.id.navigation_crypt:
-                        textView_content.setText(crypt);
+                        textView_content.setText(arrayList_ground.get(0).getSnowtam_raw());
 
                         return true;
                     case R.id.navigation_decrypt:
-                        textView_content.setText(decrypt);
+                        textView_content.setText(arrayList_ground.get(0).getSnowtam_raw());
                         return true;
 
                 }
@@ -240,7 +228,7 @@ public class ActivityResult extends AppCompatActivity {
                     navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
                     //INITIALIZE
-                    textView_content.setText(crypt);
+                    textView_content.setText(arrayList_ground.get(0).getSnowtam_raw());
                     adb.setView(alertDialogView);
                     final AlertDialog alertDialog = adb.show();
 
