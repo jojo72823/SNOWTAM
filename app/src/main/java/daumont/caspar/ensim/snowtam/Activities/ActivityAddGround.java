@@ -30,10 +30,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -127,32 +129,6 @@ public class ActivityAddGround extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 add_ground();
-
-                /**TEST VOLLEY*/
-                RequestQueue queue;
-                GsonRequest<List_notams> gsonRequest;
-                queue = Volley.newRequestQueue(activity);
-                String url = "https://v4p4sz5ijk.execute-api.us-east-1.amazonaws.com/anbdata/states/notams/notams-list?api_key=72b1ee30-cdce-11e7-8f50-f15f214edab3&format=json&type=&Qcode=&locations=ENBO&qstring=&states=&ICAOonly=false";
-                gsonRequest = new GsonRequest<>(
-                        url, List_notams.class, null, new Response.Listener<List_notams>() {
-                    @Override
-                    public void onResponse(final List_notams response) {
-                        list_notams = response;
-                        Log.d("response ",response.getData().toString());
-                    }
-
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("error ",error.toString());
-                    }
-                });
-                queue.add(gsonRequest);
-
-
-
-
-
             }
         });
 

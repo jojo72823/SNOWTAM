@@ -2,10 +2,12 @@ package daumont.caspar.ensim.snowtam.Activities;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -24,7 +26,17 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -49,6 +61,7 @@ public class ActivityResult extends AppCompatActivity {
     private BottomNavigationView navigation;
     private Toolbar toolbar;
     private CollapsingToolbarLayout toolbar_layout;
+    private ProgressDialog mProgressDialog;
     //ARRAYLIST
     private ListGround list_ground;
     private ArrayList<Ground> arrayList_ground;
@@ -86,6 +99,11 @@ public class ActivityResult extends AppCompatActivity {
         activity = this;
         setSupportActionBar(toolbar);
         toolbar_layout.setTitle(getString(R.string.activityResult));
+        mProgressDialog = new ProgressDialog(activity);
+        mProgressDialog.setTitle("Veuillez patienter");
+        mProgressDialog.setMessage("Connexion en cours...");
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.setIndeterminate(false);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -112,11 +130,7 @@ public class ActivityResult extends AppCompatActivity {
             }
         });
 
-
-        Address address = Methods.getLatLngAddress(activity,"15 rue jacques Brel, 72700, spay, france");
-        double lat = address.getLatitude();
-        double lng = address.getLongitude();
-        Toast.makeText(activity, "lat = "+lat+" |lng = "+lng, Toast.LENGTH_SHORT).show();
+        new Loading().execute();
 
     }
 
@@ -248,6 +262,83 @@ public class ActivityResult extends AppCompatActivity {
 
         }
 
+
+    }
+
+    private class Loading extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mProgressDialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+           for(int cpt=0;cpt<arrayList_ground.size();cpt++){
+               // Initialize a new RequestQueue instance
+               RequestQueue requestQueue = Volley.newRequestQueue(activity);
+               String url = "https://v4p4sz5ijk.execute-api.us-east-1.amazonaws.com/anbdata/states/notams/notams-list?api_key=72b1ee30-cdce-11e7-8f50-f15f214edab3&format=json&type=&Qcode=&locations="+arrayList_ground.get(0).getName()+"&qstring=&states=&ICAOonly=false";
+               // Initialize a new JsonArrayRequest instance
+               JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
+                       Request.Method.GET,
+                       url,
+                       null,
+                       new Response.Listener<JSONArray>() {
+                           @Override
+                           public void onResponse(JSONArray response) {
+                               // Do something with response
+                               //mTextView.setText(response.toString());
+
+                               // Process the JSON
+                               try{
+                                   // Loop through the array elements
+                                   for(int i=0;i<response.length();i++){
+                                       // Get current json object
+                                       JSONObject detail = response.getJSONObject(i);
+
+                                       String data = detail.getString("all");
+                                       //TRAITEMENT
+                                       if(data.indexOf("SNOWTAM ") !=-1){
+                                           Toast.makeText(activity, "data = "+data, Toast.LENGTH_SHORT).show();
+                                       }
+
+
+
+
+
+                                   }
+                               }catch (JSONException e){
+                                   e.printStackTrace();
+                               }
+                           }
+                       },
+                       new Response.ErrorListener(){
+                           @Override
+                           public void onErrorResponse(VolleyError error){
+                               // Do something when error occurred
+
+                           }
+                       }
+               );
+
+               // Add JsonArrayRequest to the RequestQueue
+               requestQueue.add(jsonArrayRequest);
+
+           }
+
+
+
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            mProgressDialog.hide();
+
+
+
+        }
 
     }
 }
