@@ -8,6 +8,10 @@ public class Ground {
 
     private String name;
 
+    private String snowtam_raw ;
+
+    private String snowtam_decoded ;
+
     public Ground(String name){
         this.name = name;
     }
@@ -18,5 +22,21 @@ public class Ground {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getSnowtam_raw() {
+        return snowtam_raw;
+    }
+
+    public void setSnowtam_raw(String snowtam_raw) {
+        this.snowtam_raw = snowtam_raw;
+    }
+
+    public String getSnowtam_decoded() {
+        return snowtam_decoded;
+    }
+
+    public void setSnowtam_decoded(String snowtam_decoded) {
+        this.snowtam_decoded = snowtam_decoded;
     }
 }

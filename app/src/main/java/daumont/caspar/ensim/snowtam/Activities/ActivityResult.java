@@ -15,6 +15,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -83,6 +84,9 @@ public class ActivityResult extends AppCompatActivity {
             "G) MEAN DEPTH 2mm / 2mm / 3mm\n" +
             "H) BRAKING ACTION : MEDIUM TO POOR / POOR / POOR\n" +
             "N) TAXIWAYS: WET SNOW";
+
+
+
 
 
     @Override
@@ -275,6 +279,7 @@ public class ActivityResult extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... params) {
            for(int cpt=0;cpt<arrayList_ground.size();cpt++){
+               final int cptfinal = cpt;
                // Initialize a new RequestQueue instance
                RequestQueue requestQueue = Volley.newRequestQueue(activity);
                String url = "https://v4p4sz5ijk.execute-api.us-east-1.amazonaws.com/anbdata/states/notams/notams-list?api_key=72b1ee30-cdce-11e7-8f50-f15f214edab3&format=json&type=&Qcode=&locations="+arrayList_ground.get(0).getName()+"&qstring=&states=&ICAOonly=false";
@@ -300,6 +305,78 @@ public class ActivityResult extends AppCompatActivity {
                                        //TRAITEMENT
                                        if(data.indexOf("SNOWTAM ") !=-1){
                                            Toast.makeText(activity, "data = "+data, Toast.LENGTH_SHORT).show();
+                                           String part_a ;
+                                           String part_b ;
+                                           String part_c ;
+
+                                           if(data.indexOf("A) ") !=-1) {
+                                               String raw [] = data.split("A[)]");
+                                               String part_atab [] = raw[1].split("[\n]");
+                                               part_a = part_atab[0];
+                                               Toast.makeText(activity, "A = "+part_a, Toast.LENGTH_SHORT).show();
+                                           }
+                                           if(data.indexOf("B) ") !=-1) {
+                                               String raw [] = data.split("B[)]");
+                                               String part_atab [] = raw[1].split("[C]");
+                                               part_a = part_atab[0];
+                                               Toast.makeText(activity, "B = "+part_a, Toast.LENGTH_SHORT).show();
+                                           }
+
+                                           if(data.indexOf("C) ") !=-1) {
+                                               String raw [] = data.split("C[)]");
+                                               if(data.indexOf("D) ") !=-1) {
+                                                   String part_ctab[] = raw[1].split("[D]");
+                                                   part_c = part_ctab[0];
+                                                   Toast.makeText(activity, "C = " + part_c, Toast.LENGTH_SHORT).show();
+                                               }
+                                               else if(data.indexOf("E) ") !=-1) {
+                                                   String part_ctab[] = raw[1].split("[E]");
+                                                   part_c = part_ctab[0];
+                                                   Toast.makeText(activity, "C = " + part_c, Toast.LENGTH_SHORT).show();
+                                               }
+                                               else if(data.indexOf("F) ") !=-1) {
+                                                   String part_ctab[] = raw[1].split("[F]");
+                                                   part_c = part_ctab[0];
+                                                   Toast.makeText(activity, "C = " + part_c, Toast.LENGTH_SHORT).show();
+                                               }
+                                               else if(data.indexOf("G) ") !=-1) {
+                                                   String part_ctab[] = raw[1].split("[G]");
+                                                   part_c = part_ctab[0];
+                                                   Toast.makeText(activity, "C = " + part_c, Toast.LENGTH_SHORT).show();
+                                               }
+                                               else if(data.indexOf("H) ") !=-1) {
+                                                   String part_ctab[] = raw[1].split("[H]");
+                                                   part_c = part_ctab[0];
+                                                   Toast.makeText(activity, "C = " + part_c, Toast.LENGTH_SHORT).show();
+                                               }
+                                               else if(data.indexOf("J) ") !=-1) {
+                                                   String part_ctab[] = raw[1].split("[J]");
+                                                   part_c = part_ctab[0];
+                                                   Toast.makeText(activity, "C = " + part_c, Toast.LENGTH_SHORT).show();
+                                               }
+                                               else if(data.indexOf("K) ") !=-1) {
+                                                   String part_ctab[] = raw[1].split("[K]");
+                                                   part_c = part_ctab[0];
+                                                   Toast.makeText(activity, "C = " + part_c, Toast.LENGTH_SHORT).show();
+                                               }
+                                               else if(data.indexOf("L) ") !=-1) {
+                                                   String part_ctab[] = raw[1].split("[L]");
+                                                   part_c = part_ctab[0];
+                                                   Toast.makeText(activity, "C = " + part_c, Toast.LENGTH_SHORT).show();
+                                               }
+                                               else if(data.indexOf("M) ") !=-1) {
+                                                   String part_ctab[] = raw[1].split("[M]");
+                                                   part_c = part_ctab[0];
+                                                   Toast.makeText(activity, "C = " + part_c, Toast.LENGTH_SHORT).show();
+                                               }
+                                           }
+
+
+
+                                           arrayList_ground.get(cptfinal).setSnowtam_raw(data);
+
+
+
                                        }
 
 
