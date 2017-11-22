@@ -351,7 +351,7 @@ public class ActivityResult extends AppCompatActivity {
                                                 String part_tab[] = raw[1].split("[ ]");
                                                 if (part_tab[1].indexOf("\n") != -1) {
                                                     String part_tab2[] = part_tab[1].split("[\n]");
-                                                    part_b = part_tab2[0];
+                                                    part_c = part_tab2[0];
                                                     //Toast.makeText(activity, "C = " + part_b, Toast.LENGTH_SHORT).show();
                                                 } else {
                                                     part_c = part_tab[1];
@@ -699,7 +699,7 @@ public class ActivityResult extends AppCompatActivity {
                                         }
                                     }
 
-                                    resultat_chaine = part_ad + "\n" + part_bd + "\n" + part_cd + "\n" + part_dd + "\n" + part_ed + "\n" + part_fd + "\n";
+                                    resultat_chaine ="B) "+part_bd + "\n" +"C) "+ part_cd + "\n" +"D) "+ part_dd + "\n" +"E) "+ part_ed + "\n" +"F) "+ part_fd + "\n";
                                     arrayList_ground.get(cptfinal).setSnowtam_decoded(resultat_chaine);
 
                                 } catch (JSONException e) {
@@ -744,8 +744,10 @@ public class ActivityResult extends AppCompatActivity {
                                         String latitude = detail.getString("Latitude");
 
                                         arrayList_ground.get(cptfinal).setLatLng(new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude)));
-
-                                        part_ad = data;
+                                        String resultbegin =  arrayList_ground.get(cptfinal).getSnowtam_decoded();
+                                        part_ad = "A) " +data;
+                                        String deco = part_ad+"\n"+resultbegin;
+                                        arrayList_ground.get(cptfinal).setSnowtam_decoded(deco);
                                         //Toast.makeText(activity, "A = " + part_ad, Toast.LENGTH_SHORT).show();
 
 
@@ -765,6 +767,11 @@ public class ActivityResult extends AppCompatActivity {
                 );
 
                 // Add JsonArrayRequest to the RequestQueue
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 requestQueue2.add(jsonArrayRequest2);
 
 
