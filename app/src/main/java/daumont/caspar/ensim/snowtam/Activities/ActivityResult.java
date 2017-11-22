@@ -113,6 +113,10 @@ public class ActivityResult extends AppCompatActivity {
     public String part_sd = "";
     public String part_td = "";
 
+    public String data = "";
+
+    public Boolean find_snowtam = false;
+
 
 
 
@@ -193,7 +197,7 @@ public class ActivityResult extends AppCompatActivity {
 
                         return true;
                     case R.id.navigation_decrypt:
-                        textView_content.setText(arrayList_ground.get(1).getSnowtam_raw());
+                        textView_content.setText(arrayList_ground.get(0).getSnowtam_decoded());
                         return true;
 
                 }
@@ -328,10 +332,11 @@ public class ActivityResult extends AppCompatActivity {
                                         // Get current json object
                                         JSONObject detail = response.getJSONObject(i);
 
-                                        String data = detail.getString("all");
+                                        data = detail.getString("all");
                                         //TRAITEMENT
-                                        if (data.indexOf("SNOWTAM ") != -1) {
+                                        if (data.indexOf("SNOWTAM ") != -1 && find_snowtam == false) {
                                             //Toast.makeText(activity, "data = " + data, Toast.LENGTH_SHORT).show();
+                                            find_snowtam = true;
 
 
                                             if (data.indexOf("A) ") != -1) {
@@ -536,10 +541,11 @@ public class ActivityResult extends AppCompatActivity {
 
                                         }
 
-                                        arrayList_ground.get(cptfinal).setSnowtam_raw(data);
-
-
                                     }
+                                    arrayList_ground.get(cptfinal).setSnowtam_raw(data);
+                                    find_snowtam = false;
+                                    String decoded= decrepting();
+                                    arrayList_ground.get(cptfinal).setSnowtam_decoded(decoded);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -609,7 +615,9 @@ public class ActivityResult extends AppCompatActivity {
 
 
 
+
             }
+
             return null;
         }
 
@@ -622,7 +630,7 @@ public class ActivityResult extends AppCompatActivity {
         }
 
     }
-    public void decrepting ()
+    public String decrepting ()
     {
         if (part_b != "")
         {
@@ -639,17 +647,17 @@ public class ActivityResult extends AppCompatActivity {
         }
         if(part_c != "")
         {
-            part_cd = "RUNWAY"+part_c;
+            part_cd =  getString(R.string.part_cs) +part_c;
         }
         if(part_d != "")
         {
-            part_dd = "CLEARED RUNWAY LENGTH "+part_d+"M";
+            part_dd = getString(R.string.part_ds)+getString(R.string.m);
         }
         if(part_e != "")
         {
             String diretion [] = part_e.split("\\s+");
-            if(diretion[1] == "R") part_ed = "CLEARED RUNWAY WIDTH "+diretion[0]+"M RIGHT";
-            if(diretion[1] == "L") part_ed = "CLEARED RUNWAY WIDTH "+diretion[0]+"M LEFT";
+            if(diretion[1] == "R") part_ed = getString(R.string.part_es)+diretion[0]+getString(R.string.part_esr);
+            if(diretion[1] == "L") part_ed = getString(R.string.part_es)+diretion[0]+getString(R.string.part_esr);
         }
         if(part_f != "")
         {
@@ -659,14 +667,169 @@ public class ActivityResult extends AppCompatActivity {
             {
                 if(instruction[i].indexOf("0") != -1)
                 {
+                    switch (i)
+                    {
+                        case 0 :
+                            part_fd += getString(R.string.threshold)+getString(R.string.part_fs0);
+                            break;
+                        case 1 :
+                            part_fd += getString(R.string.mid_runway)+getString(R.string.part_fs0);
+                            break;
+                        case 2 :
+                            part_fd += getString(R.string.roll_out)+getString(R.string.part_fs0);
+                            break;
+                    }
 
+
+                }
+                else if(instruction[i].indexOf("1") != -1)
+                {
+                    switch (i)
+                    {
+                        case 0 :
+                            part_fd += getString(R.string.threshold)+getString(R.string.part_fs1);
+                            break;
+                        case 1 :
+                            part_fd += getString(R.string.mid_runway)+getString(R.string.part_fs1);
+                            break;
+                        case 2 :
+                            part_fd += getString(R.string.roll_out)+getString(R.string.part_fs1);
+                            break;
+                    }
+
+                }
+                else if(instruction[i].indexOf("2") != -1)
+                {
+                    switch (i)
+                    {
+                        case 0 :
+                            part_fd += getString(R.string.threshold)+getString(R.string.part_fs2);
+                            break;
+                        case 1 :
+                            part_fd += getString(R.string.mid_runway)+getString(R.string.part_fs2);
+                            break;
+                        case 2 :
+                            part_fd += getString(R.string.roll_out)+getString(R.string.part_fs2);
+                            break;
+                    }
+
+                }
+                else if(instruction[i].indexOf("3") != -1)
+                {
+                    switch (i)
+                    {
+                        case 0 :
+                            part_fd += getString(R.string.threshold)+getString(R.string.part_fs3);
+                            break;
+                        case 1 :
+                            part_fd += getString(R.string.mid_runway)+getString(R.string.part_fs3);
+                            break;
+                        case 2 :
+                            part_fd += getString(R.string.roll_out)+getString(R.string.part_fs3);
+                            break;
+                    }
+
+                }
+                else if(instruction[i].indexOf("4") != -1)
+                {
+                    switch (i)
+                    {
+                        case 0 :
+                            part_fd += getString(R.string.threshold)+getString(R.string.part_fs4);
+                            break;
+                        case 1 :
+                            part_fd += getString(R.string.mid_runway)+getString(R.string.part_fs4);
+                            break;
+                        case 2 :
+                            part_fd += getString(R.string.roll_out)+getString(R.string.part_fs4);
+                            break;
+                    }
+
+                }
+                else if(instruction[i].indexOf("5") != -1)
+                {
+                    switch (i)
+                    {
+                        case 0 :
+                            part_fd += getString(R.string.threshold)+getString(R.string.part_fs5);
+                            break;
+                        case 1 :
+                            part_fd += getString(R.string.mid_runway)+getString(R.string.part_fs5);
+                            break;
+                        case 2 :
+                            part_fd += getString(R.string.roll_out)+getString(R.string.part_fs5);
+                            break;
+                    }
+
+                }
+                else if(instruction[i].indexOf("6") != -1)
+                {
+                    switch (i)
+                    {
+                        case 0 :
+                            part_fd += getString(R.string.threshold)+getString(R.string.part_fs6);
+                            break;
+                        case 1 :
+                            part_fd += getString(R.string.mid_runway)+getString(R.string.part_fs6);
+                            break;
+                        case 2 :
+                            part_fd += getString(R.string.roll_out)+getString(R.string.part_fs6);
+                            break;
+                    }
+
+                }
+                else if(instruction[i].indexOf("7") != -1)
+                {
+                    switch (i)
+                    {
+                        case 0 :
+                            part_fd += getString(R.string.threshold)+getString(R.string.part_fs7);
+                            break;
+                        case 1 :
+                            part_fd += getString(R.string.mid_runway)+getString(R.string.part_fs7);
+                            break;
+                        case 2 :
+                            part_fd += getString(R.string.roll_out)+getString(R.string.part_fs7);
+                            break;
+                    }
+
+                }
+                else if(instruction[i].indexOf("8") != -1)
+                {
+                    switch (i)
+                    {
+                        case 0 :
+                            part_fd += getString(R.string.threshold)+getString(R.string.part_fs8);
+                            break;
+                        case 1 :
+                            part_fd += getString(R.string.mid_runway)+getString(R.string.part_fs8);
+                            break;
+                        case 2 :
+                            part_fd += getString(R.string.roll_out)+getString(R.string.part_fs8);
+                            break;
+                    }
+
+                }
+                else if(instruction[i].indexOf("9") != -1)
+                {
+                    switch (i)
+                    {
+                        case 0 :
+                            part_fd += getString(R.string.threshold)+getString(R.string.part_fs9);
+                            break;
+                        case 1 :
+                            part_fd += getString(R.string.mid_runway)+getString(R.string.part_fs9);
+                            break;
+                        case 2 :
+                            part_fd += getString(R.string.roll_out)+getString(R.string.part_fs9);
+                            break;
+                    }
 
                 }
             }
         }
 
-
-
+        return part_ad+"\n"+part_bd+"\n"+part_cd+"\n"+part_dd+"\n"+part_ed+"\n"+part_fd+"\n";
 
     }
 }
