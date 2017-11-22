@@ -150,6 +150,7 @@ public class ActivityMaps extends FragmentActivity implements GoogleMap.OnInfoWi
             }
 
             // Defines the contents of the InfoWindow
+
             @Override
             public View getInfoContents(Marker arg0) {
 
