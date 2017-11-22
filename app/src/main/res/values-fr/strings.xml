@@ -15,4 +15,6 @@
     <string name="list_empty">Aucun aéroport</string>
     <string name="loading">Veuillez patienter</string>
     <string name="loading_subtitle">Chargement</string>
+    <string name="previous">Précédent</string>
+    <string name="next">Suivant</string>
 </resources>

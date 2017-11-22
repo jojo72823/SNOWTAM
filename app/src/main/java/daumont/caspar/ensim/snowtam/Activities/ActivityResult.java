@@ -113,6 +113,8 @@ public class ActivityResult extends AppCompatActivity {
     public String part_sd = "";
     public String part_td = "";
 
+    private int select_position;
+
 
 
 
@@ -189,11 +191,11 @@ public class ActivityResult extends AppCompatActivity {
             if (Methods.internet_diponible(activity)) {
                 switch (item.getItemId()) {
                     case R.id.navigation_crypt:
-                        textView_content.setText(arrayList_ground.get(0).getSnowtam_raw());
+                        textView_content.setText(arrayList_ground.get(select_position).getSnowtam_raw());
 
                         return true;
                     case R.id.navigation_decrypt:
-                        textView_content.setText(arrayList_ground.get(1).getSnowtam_raw());
+                        textView_content.setText(arrayList_ground.get(select_position).getSnowtam_raw());
                         return true;
 
                 }
@@ -267,6 +269,7 @@ public class ActivityResult extends AppCompatActivity {
                     navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
                     //INITIALIZE
+                    select_position = position;
                     textView_content.setText(arrayList_ground.get(0).getSnowtam_raw());
                     adb.setView(alertDialogView);
                     final AlertDialog alertDialog = adb.show();

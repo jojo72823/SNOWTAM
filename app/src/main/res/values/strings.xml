@@ -15,4 +15,6 @@
     <string name="list_empty">No airport</string>
     <string name="loading">Please wait</string>
     <string name="loading_subtitle">Loading</string>
+    <string name="previous">previous</string>
+    <string name="next">Next</string>
 </resources>
