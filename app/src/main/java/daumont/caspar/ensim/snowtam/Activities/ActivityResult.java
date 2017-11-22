@@ -5,8 +5,6 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.location.Address;
-import android.location.Geocoder;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,7 +13,6 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,7 +22,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -40,22 +36,54 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import daumont.caspar.ensim.snowtam.Model.Ground;
 import daumont.caspar.ensim.snowtam.Model.ListGround;
 import daumont.caspar.ensim.snowtam.R;
 import daumont.caspar.ensim.snowtam.utils.Methods;
 
-import static android.R.id.list;
-
 public class ActivityResult extends AppCompatActivity {
 
+    public String part_a = "";
+    public String part_b = "";
+    public String part_c = "";
+    public String part_d = "";
+    public String part_e = "";
+    public String part_f = "";
+    public String part_g = "";
+    public String part_h = "";
+    public String part_j = "";
+    public String part_k = "";
+    public String part_l = "";
+    public String part_m = "";
+    public String part_n = "";
+    public String part_p = "";
+    public String part_r = "";
+    public String part_s = "";
+    public String part_t = "";
+    public String part_ad = "";
+    public String part_bd = "";
+    public String part_cd = "";
+    public String part_dd = "";
+    public String part_ed = "";
+    public String part_fd = "";
+    public String part_gd = "";
+    public String part_hd = "";
+    public String part_jd = "";
+    public String part_kd = "";
+    public String part_ld = "";
+    public String part_md = "";
+    public String part_nd = "";
+    public String part_pd = "";
+    public String part_rd = "";
+    public String part_sd = "";
+    public String part_td = "";
+    public String data = "";
+    public Boolean find_snowtam = false;
     /**
      * ATTRIBUTES
      */
@@ -74,51 +102,31 @@ public class ActivityResult extends AppCompatActivity {
     private Activity activity;
     private MyCustomAdapterGround dataMyCustomAdapterGround;
 
-    private String crypt = "";
-    private String decrypt = "";
+    private int id_position;
 
-    public String part_a = "";
-    public String part_b = "";
-    public String part_c = "";
-    public String part_d = "";
-    public String part_e = "";
-    public String part_f = "";
-    public String part_g = "";
-    public String part_h = "";
-    public String part_j = "";
-    public String part_k = "";
-    public String part_l = "";
-    public String part_m = "";
-    public String part_n = "";
-    public String part_p  = "";
-    public String part_r = "";
-    public String part_s = "";
-    public String part_t = "";
+    private String resultat_chaine;
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
-    public String part_ad  = "";
-    public String part_bd = "";
-    public String part_cd = "";
-    public String part_dd = "";
-    public String part_ed = "";
-    public String part_fd = "";
-    public String part_gd = "";
-    public String part_hd = "";
-    public String part_jd = "";
-    public String part_kd = "";
-    public String part_ld = "";
-    public String part_md = "";
-    public String part_nd = "";
-    public String part_pd = "";
-    public String part_rd = "";
-    public String part_sd = "";
-    public String part_td = "";
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            if (Methods.internet_diponible(activity)) {
+                switch (item.getItemId()) {
+                    case R.id.navigation_crypt:
+                        textView_content.setText(arrayList_ground.get(id_position).getSnowtam_raw());
 
-    public String data = "";
+                        return true;
+                    case R.id.navigation_decrypt:
+                        textView_content.setText(arrayList_ground.get(id_position).getSnowtam_decoded());
+                        return true;
 
-    public Boolean find_snowtam = false;
+                }
+            }
 
+            return false;
+        }
 
-
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,6 +147,7 @@ public class ActivityResult extends AppCompatActivity {
         mProgressDialog.setMessage(getString(R.string.loading_subtitle));
         mProgressDialog.setCancelable(false);
         mProgressDialog.setIndeterminate(false);
+        id_position = 0;
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -147,7 +156,7 @@ public class ActivityResult extends AppCompatActivity {
                 arrayList_ground = list_ground.getListGround();
             }
         }
-        dataMyCustomAdapterGround = new MyCustomAdapterGround(activity, R.layout.list_layout_ground,arrayList_ground);
+        dataMyCustomAdapterGround = new MyCustomAdapterGround(activity, R.layout.list_layout_ground, arrayList_ground);
         listView_ground.setAdapter(dataMyCustomAdapterGround);
 
 
@@ -184,29 +193,6 @@ public class ActivityResult extends AppCompatActivity {
         }
 
     }
-
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            if (Methods.internet_diponible(activity)) {
-                switch (item.getItemId()) {
-                    case R.id.navigation_crypt:
-                        textView_content.setText(arrayList_ground.get(0).getSnowtam_raw());
-
-                        return true;
-                    case R.id.navigation_decrypt:
-                        textView_content.setText(arrayList_ground.get(0).getSnowtam_decoded());
-                        return true;
-
-                }
-            }
-
-            return false;
-        }
-
-    };
 
     private class MyCustomAdapterGround extends ArrayAdapter<Ground> {
 
@@ -264,14 +250,16 @@ public class ActivityResult extends AppCompatActivity {
                     final View alertDialogView = factory.inflate(R.layout.dialog_view_ground, null);
                     AlertDialog.Builder adb = new AlertDialog.Builder(activity);
 
+                    id_position = position;
+
                     //GET INTERFACE
                     Button button_close = (Button) alertDialogView.findViewById(R.id.button_close);
-                    textView_content = (TextView)alertDialogView.findViewById(R.id.textView_content);
+                    textView_content = (TextView) alertDialogView.findViewById(R.id.textView_content);
                     navigation = (BottomNavigationView) alertDialogView.findViewById(R.id.navigation_produits);
                     navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
                     //INITIALIZE
-                    textView_content.setText(arrayList_ground.get(0).getSnowtam_decoded());
+                    textView_content.setText(arrayList_ground.get(id_position).getSnowtam_decoded());
                     adb.setView(alertDialogView);
                     final AlertDialog alertDialog = adb.show();
 
@@ -332,7 +320,7 @@ public class ActivityResult extends AppCompatActivity {
                                         // Get current json object
                                         JSONObject detail = response.getJSONObject(i);
 
-                                        data = detail.getString("all");
+                                        if (find_snowtam == false) data = detail.getString("all");
                                         //TRAITEMENT
                                         if (data.indexOf("SNOWTAM ") != -1 && find_snowtam == false) {
                                             //Toast.makeText(activity, "data = " + data, Toast.LENGTH_SHORT).show();
@@ -542,10 +530,178 @@ public class ActivityResult extends AppCompatActivity {
                                         }
 
                                     }
+
+                                    //TODO
                                     arrayList_ground.get(cptfinal).setSnowtam_raw(data);
+
                                     find_snowtam = false;
-                                    String decoded= decrepting();
-                                    arrayList_ground.get(cptfinal).setSnowtam_decoded(decoded);
+
+                                    if (part_b != "") {
+                                        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM d, HH:mm ");
+                                        Date converterDate = new Date();
+                                        try {
+                                            converterDate = dateFormat.parse(part_b);
+
+                                        } catch (ParseException e) {
+                                            e.printStackTrace();
+                                        }
+                                        part_bd = converterDate.toString();
+                                    }
+                                    if (part_c != "") {
+                                        part_cd = getString(R.string.part_cs) + part_c;
+                                    }
+                                    if (part_d != "") {
+                                        part_dd = getString(R.string.part_ds) + getString(R.string.m);
+                                    }
+                                    if (part_e != "") {
+                                        String diretion[] = part_e.split("\\s+");
+                                        if (diretion[1] == "R")
+                                            part_ed = getString(R.string.part_es) + diretion[0] + getString(R.string.part_esr);
+                                        if (diretion[1] == "L")
+                                            part_ed = getString(R.string.part_es) + diretion[0] + getString(R.string.part_esr);
+                                    }
+                                    if (part_f != "") {
+                                        String instruction[] = part_f.split("[/]");
+
+                                        for (int i = 0; i < instruction.length; i++) {
+                                            if (instruction[i].indexOf("0") != -1) {
+                                                switch (i) {
+                                                    case 0:
+                                                        part_fd += getString(R.string.threshold) + getString(R.string.part_fs0);
+                                                        break;
+                                                    case 1:
+                                                        part_fd += getString(R.string.mid_runway) + getString(R.string.part_fs0);
+                                                        break;
+                                                    case 2:
+                                                        part_fd += getString(R.string.roll_out) + getString(R.string.part_fs0);
+                                                        break;
+                                                }
+
+
+                                            } else if (instruction[i].indexOf("1") != -1) {
+                                                switch (i) {
+                                                    case 0:
+                                                        part_fd += getString(R.string.threshold) + getString(R.string.part_fs1);
+                                                        break;
+                                                    case 1:
+                                                        part_fd += getString(R.string.mid_runway) + getString(R.string.part_fs1);
+                                                        break;
+                                                    case 2:
+                                                        part_fd += getString(R.string.roll_out) + getString(R.string.part_fs1);
+                                                        break;
+                                                }
+
+                                            } else if (instruction[i].indexOf("2") != -1) {
+                                                switch (i) {
+                                                    case 0:
+                                                        part_fd += getString(R.string.threshold) + getString(R.string.part_fs2);
+                                                        break;
+                                                    case 1:
+                                                        part_fd += getString(R.string.mid_runway) + getString(R.string.part_fs2);
+                                                        break;
+                                                    case 2:
+                                                        part_fd += getString(R.string.roll_out) + getString(R.string.part_fs2);
+                                                        break;
+                                                }
+
+                                            } else if (instruction[i].indexOf("3") != -1) {
+                                                switch (i) {
+                                                    case 0:
+                                                        part_fd += getString(R.string.threshold) + getString(R.string.part_fs3);
+                                                        break;
+                                                    case 1:
+                                                        part_fd += getString(R.string.mid_runway) + getString(R.string.part_fs3);
+                                                        break;
+                                                    case 2:
+                                                        part_fd += getString(R.string.roll_out) + getString(R.string.part_fs3);
+                                                        break;
+                                                }
+
+                                            } else if (instruction[i].indexOf("4") != -1) {
+                                                switch (i) {
+                                                    case 0:
+                                                        part_fd += getString(R.string.threshold) + getString(R.string.part_fs4);
+                                                        break;
+                                                    case 1:
+                                                        part_fd += getString(R.string.mid_runway) + getString(R.string.part_fs4);
+                                                        break;
+                                                    case 2:
+                                                        part_fd += getString(R.string.roll_out) + getString(R.string.part_fs4);
+                                                        break;
+                                                }
+
+                                            } else if (instruction[i].indexOf("5") != -1) {
+                                                switch (i) {
+                                                    case 0:
+                                                        part_fd += getString(R.string.threshold) + getString(R.string.part_fs5);
+                                                        break;
+                                                    case 1:
+                                                        part_fd += getString(R.string.mid_runway) + getString(R.string.part_fs5);
+                                                        break;
+                                                    case 2:
+                                                        part_fd += getString(R.string.roll_out) + getString(R.string.part_fs5);
+                                                        break;
+                                                }
+
+                                            } else if (instruction[i].indexOf("6") != -1) {
+                                                switch (i) {
+                                                    case 0:
+                                                        part_fd += getString(R.string.threshold) + getString(R.string.part_fs6);
+                                                        break;
+                                                    case 1:
+                                                        part_fd += getString(R.string.mid_runway) + getString(R.string.part_fs6);
+                                                        break;
+                                                    case 2:
+                                                        part_fd += getString(R.string.roll_out) + getString(R.string.part_fs6);
+                                                        break;
+                                                }
+
+                                            } else if (instruction[i].indexOf("7") != -1) {
+                                                switch (i) {
+                                                    case 0:
+                                                        part_fd += getString(R.string.threshold) + getString(R.string.part_fs7);
+                                                        break;
+                                                    case 1:
+                                                        part_fd += getString(R.string.mid_runway) + getString(R.string.part_fs7);
+                                                        break;
+                                                    case 2:
+                                                        part_fd += getString(R.string.roll_out) + getString(R.string.part_fs7);
+                                                        break;
+                                                }
+
+                                            } else if (instruction[i].indexOf("8") != -1) {
+                                                switch (i) {
+                                                    case 0:
+                                                        part_fd += getString(R.string.threshold) + getString(R.string.part_fs8);
+                                                        break;
+                                                    case 1:
+                                                        part_fd += getString(R.string.mid_runway) + getString(R.string.part_fs8);
+                                                        break;
+                                                    case 2:
+                                                        part_fd += getString(R.string.roll_out) + getString(R.string.part_fs8);
+                                                        break;
+                                                }
+
+                                            } else if (instruction[i].indexOf("9") != -1) {
+                                                switch (i) {
+                                                    case 0:
+                                                        part_fd += getString(R.string.threshold) + getString(R.string.part_fs9);
+                                                        break;
+                                                    case 1:
+                                                        part_fd += getString(R.string.mid_runway) + getString(R.string.part_fs9);
+                                                        break;
+                                                    case 2:
+                                                        part_fd += getString(R.string.roll_out) + getString(R.string.part_fs9);
+                                                        break;
+                                                }
+
+                                            }
+                                        }
+                                    }
+
+                                    resultat_chaine = part_ad + "\n" + part_bd + "\n" + part_cd + "\n" + part_dd + "\n" + part_ed + "\n" + part_fd + "\n";
+                                    arrayList_ground.get(cptfinal).setSnowtam_decoded(resultat_chaine);
+
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -587,12 +743,10 @@ public class ActivityResult extends AppCompatActivity {
                                         String longitude = detail.getString("Longitude");
                                         String latitude = detail.getString("Latitude");
 
-                                        arrayList_ground.get(cptfinal).setLatLng(new LatLng(Double.parseDouble(latitude),Double.parseDouble(longitude)));
+                                        arrayList_ground.get(cptfinal).setLatLng(new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude)));
 
                                         part_ad = data;
                                         //Toast.makeText(activity, "A = " + part_ad, Toast.LENGTH_SHORT).show();
-
-
 
 
                                     }
@@ -614,8 +768,6 @@ public class ActivityResult extends AppCompatActivity {
                 requestQueue2.add(jsonArrayRequest2);
 
 
-
-
             }
 
             return null;
@@ -626,210 +778,9 @@ public class ActivityResult extends AppCompatActivity {
             mProgressDialog.hide();
 
 
-
         }
 
     }
-    public String decrepting ()
-    {
-        if (part_b != "")
-        {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("MMM d, HH:mm ");
-            Date converterDate = new Date();
-            try
-            {
-                converterDate = dateFormat.parse(part_b);
-
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            part_bd = converterDate.toString();
-        }
-        if(part_c != "")
-        {
-            part_cd =  getString(R.string.part_cs) +part_c;
-        }
-        if(part_d != "")
-        {
-            part_dd = getString(R.string.part_ds)+getString(R.string.m);
-        }
-        if(part_e != "")
-        {
-            String diretion [] = part_e.split("\\s+");
-            if(diretion[1] == "R") part_ed = getString(R.string.part_es)+diretion[0]+getString(R.string.part_esr);
-            if(diretion[1] == "L") part_ed = getString(R.string.part_es)+diretion[0]+getString(R.string.part_esr);
-        }
-        if(part_f != "")
-        {
-            String instruction [] = part_f.split("[/]");
-
-            for( int i = 0; i < instruction.length; i++)
-            {
-                if(instruction[i].indexOf("0") != -1)
-                {
-                    switch (i)
-                    {
-                        case 0 :
-                            part_fd += getString(R.string.threshold)+getString(R.string.part_fs0);
-                            break;
-                        case 1 :
-                            part_fd += getString(R.string.mid_runway)+getString(R.string.part_fs0);
-                            break;
-                        case 2 :
-                            part_fd += getString(R.string.roll_out)+getString(R.string.part_fs0);
-                            break;
-                    }
 
 
-                }
-                else if(instruction[i].indexOf("1") != -1)
-                {
-                    switch (i)
-                    {
-                        case 0 :
-                            part_fd += getString(R.string.threshold)+getString(R.string.part_fs1);
-                            break;
-                        case 1 :
-                            part_fd += getString(R.string.mid_runway)+getString(R.string.part_fs1);
-                            break;
-                        case 2 :
-                            part_fd += getString(R.string.roll_out)+getString(R.string.part_fs1);
-                            break;
-                    }
-
-                }
-                else if(instruction[i].indexOf("2") != -1)
-                {
-                    switch (i)
-                    {
-                        case 0 :
-                            part_fd += getString(R.string.threshold)+getString(R.string.part_fs2);
-                            break;
-                        case 1 :
-                            part_fd += getString(R.string.mid_runway)+getString(R.string.part_fs2);
-                            break;
-                        case 2 :
-                            part_fd += getString(R.string.roll_out)+getString(R.string.part_fs2);
-                            break;
-                    }
-
-                }
-                else if(instruction[i].indexOf("3") != -1)
-                {
-                    switch (i)
-                    {
-                        case 0 :
-                            part_fd += getString(R.string.threshold)+getString(R.string.part_fs3);
-                            break;
-                        case 1 :
-                            part_fd += getString(R.string.mid_runway)+getString(R.string.part_fs3);
-                            break;
-                        case 2 :
-                            part_fd += getString(R.string.roll_out)+getString(R.string.part_fs3);
-                            break;
-                    }
-
-                }
-                else if(instruction[i].indexOf("4") != -1)
-                {
-                    switch (i)
-                    {
-                        case 0 :
-                            part_fd += getString(R.string.threshold)+getString(R.string.part_fs4);
-                            break;
-                        case 1 :
-                            part_fd += getString(R.string.mid_runway)+getString(R.string.part_fs4);
-                            break;
-                        case 2 :
-                            part_fd += getString(R.string.roll_out)+getString(R.string.part_fs4);
-                            break;
-                    }
-
-                }
-                else if(instruction[i].indexOf("5") != -1)
-                {
-                    switch (i)
-                    {
-                        case 0 :
-                            part_fd += getString(R.string.threshold)+getString(R.string.part_fs5);
-                            break;
-                        case 1 :
-                            part_fd += getString(R.string.mid_runway)+getString(R.string.part_fs5);
-                            break;
-                        case 2 :
-                            part_fd += getString(R.string.roll_out)+getString(R.string.part_fs5);
-                            break;
-                    }
-
-                }
-                else if(instruction[i].indexOf("6") != -1)
-                {
-                    switch (i)
-                    {
-                        case 0 :
-                            part_fd += getString(R.string.threshold)+getString(R.string.part_fs6);
-                            break;
-                        case 1 :
-                            part_fd += getString(R.string.mid_runway)+getString(R.string.part_fs6);
-                            break;
-                        case 2 :
-                            part_fd += getString(R.string.roll_out)+getString(R.string.part_fs6);
-                            break;
-                    }
-
-                }
-                else if(instruction[i].indexOf("7") != -1)
-                {
-                    switch (i)
-                    {
-                        case 0 :
-                            part_fd += getString(R.string.threshold)+getString(R.string.part_fs7);
-                            break;
-                        case 1 :
-                            part_fd += getString(R.string.mid_runway)+getString(R.string.part_fs7);
-                            break;
-                        case 2 :
-                            part_fd += getString(R.string.roll_out)+getString(R.string.part_fs7);
-                            break;
-                    }
-
-                }
-                else if(instruction[i].indexOf("8") != -1)
-                {
-                    switch (i)
-                    {
-                        case 0 :
-                            part_fd += getString(R.string.threshold)+getString(R.string.part_fs8);
-                            break;
-                        case 1 :
-                            part_fd += getString(R.string.mid_runway)+getString(R.string.part_fs8);
-                            break;
-                        case 2 :
-                            part_fd += getString(R.string.roll_out)+getString(R.string.part_fs8);
-                            break;
-                    }
-
-                }
-                else if(instruction[i].indexOf("9") != -1)
-                {
-                    switch (i)
-                    {
-                        case 0 :
-                            part_fd += getString(R.string.threshold)+getString(R.string.part_fs9);
-                            break;
-                        case 1 :
-                            part_fd += getString(R.string.mid_runway)+getString(R.string.part_fs9);
-                            break;
-                        case 2 :
-                            part_fd += getString(R.string.roll_out)+getString(R.string.part_fs9);
-                            break;
-                    }
-
-                }
-            }
-        }
-
-        return part_ad+"\n"+part_bd+"\n"+part_cd+"\n"+part_dd+"\n"+part_ed+"\n"+part_fd+"\n";
-
-    }
 }
