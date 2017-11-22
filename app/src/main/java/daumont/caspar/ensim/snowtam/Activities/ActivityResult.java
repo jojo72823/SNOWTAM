@@ -33,6 +33,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -577,6 +578,11 @@ public class ActivityResult extends AppCompatActivity {
                                         JSONObject detail = response.getJSONObject(i);
 
                                         String data = detail.getString("Location_Name");
+                                        String longitude = detail.getString("Longitude");
+                                        String latitude = detail.getString("Latitude");
+
+                                        arrayList_ground.get(cptfinal).setLatLng(new LatLng(Double.parseDouble(latitude),Double.parseDouble(longitude)));
+
                                         part_ad = data;
                                         //Toast.makeText(activity, "A = " + part_ad, Toast.LENGTH_SHORT).show();
 

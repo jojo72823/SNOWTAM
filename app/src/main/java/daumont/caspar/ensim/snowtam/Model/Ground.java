@@ -1,5 +1,9 @@
 package daumont.caspar.ensim.snowtam.Model;
 
+import android.location.Address;
+
+import com.google.android.gms.maps.model.LatLng;
+
 /**
  * Created by jojo- on 14/11/2017.
  */
@@ -12,6 +16,7 @@ public class Ground {
     private String snowtam_raw ;
 
     private String snowtam_decoded ;
+    private LatLng latLng;
 
     public Ground(String name){
         this.name = name;
@@ -48,5 +53,13 @@ public class Ground {
     public void setData_crypt(String data_crypt) {
         this.data_crypt = data_crypt;
 
+    }
+
+    public LatLng getLatLng() {
+        return latLng;
+    }
+
+    public void setLatLng(LatLng latLng) {
+        this.latLng = latLng;
     }
 }
