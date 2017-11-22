@@ -271,7 +271,7 @@ public class ActivityResult extends AppCompatActivity {
                     navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
                     //INITIALIZE
-                    textView_content.setText(arrayList_ground.get(0).getSnowtam_raw());
+                    textView_content.setText(arrayList_ground.get(0).getSnowtam_decoded());
                     adb.setView(alertDialogView);
                     final AlertDialog alertDialog = adb.show();
 
