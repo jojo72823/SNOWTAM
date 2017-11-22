@@ -15,6 +15,35 @@
     <string name="list_empty">No airport</string>
     <string name="loading">Please wait</string>
     <string name="loading_subtitle">Loading</string>
+
+    <string name="m">M</string>
+    <string name="mm">mm</string>
+
+    <string name="threshold"> Threshold: </string>
+    <string name="mid_runway">/ Mid runway: </string>
+    <string name="roll_out">/ Roll out: </string>
+    <string name="instrument"> Instrument: </string>
+
+    <string name="part_cs">RUNWAY</string>
+
+    <string name="part_ds">CLEARED RUNWAY LENGTH </string>
+
+    <string name="part_es">CLEARED RUNWAY WIDTH </string>
+    <string name="part_esr">M RIGHT</string>
+    <string name="part_esl">M RIGHT</string>
+
+    <string name="part_fs0">CLEAR AND DRY </string>
+    <string name="part_fs1">DAMP </string>
+    <string name="part_fs2">WET </string>
+    <string name="part_fs3">RIME </string>
+    <string name="part_fs4">DRY SNOW </string>
+    <string name="part_fs5">WET SNOW </string>
+    <string name="part_fs6">SLUSH </string>
+    <string name="part_fs7">ICE </string>
+    <string name="part_fs8">COMPACTED </string>
+    <string name="part_fs9">FROZEN RUTS </string>
+
+
     <string name="previous">previous</string>
     <string name="next">Next</string>
 </resources>
