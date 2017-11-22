@@ -40,7 +40,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import daumont.caspar.ensim.snowtam.Model.Ground;
@@ -73,42 +76,41 @@ public class ActivityResult extends AppCompatActivity {
     private String crypt = "";
     private String decrypt = "";
 
-    private String part_a;
-    private String part_b;
-    private String part_c;
-    private String part_d;
-    private String part_e;
-    private String part_f;
-    private String part_g;
-    private String part_h;
-    private String part_j;
-    private String part_k;
-    private String part_l;
-    private String part_m;
-    private String part_n;
-    private String part_p;
-    private String part_r;
-    private String part_s;
-    private String part_t;
+    public String part_a = "";
+    public String part_b = "";
+    public String part_c = "";
+    public String part_d = "";
+    public String part_e = "";
+    public String part_f = "";
+    public String part_g = "";
+    public String part_h = "";
+    public String part_j = "";
+    public String part_k = "";
+    public String part_l = "";
+    public String part_m = "";
+    public String part_n = "";
+    public String part_p  = "";
+    public String part_r = "";
+    public String part_s = "";
+    public String part_t = "";
 
-    private String part_ad;
-    private String part_bd;
-    private String part_cd;
-    private String part_dd;
-    private String part_ed;
-    private String part_fd;
-    private String part_gd;
-    private String part_hd;
-    private String part_jd;
-    private String part_kd;
-    private String part_ld;
-    private String part_md;
-    private String part_nd;
-    private String part_pd;
-    private String part_rd;
-    private String part_sd;
-    private String part_td;
-
+    public String part_ad  = "";
+    public String part_bd = "";
+    public String part_cd = "";
+    public String part_dd = "";
+    public String part_ed = "";
+    public String part_fd = "";
+    public String part_gd = "";
+    public String part_hd = "";
+    public String part_jd = "";
+    public String part_kd = "";
+    public String part_ld = "";
+    public String part_md = "";
+    public String part_nd = "";
+    public String part_pd = "";
+    public String part_rd = "";
+    public String part_sd = "";
+    public String part_td = "";
 
 
 
@@ -190,7 +192,7 @@ public class ActivityResult extends AppCompatActivity {
 
                         return true;
                     case R.id.navigation_decrypt:
-                        textView_content.setText(arrayList_ground.get(0).getSnowtam_raw());
+                        textView_content.setText(arrayList_ground.get(1).getSnowtam_raw());
                         return true;
 
                 }
@@ -306,7 +308,7 @@ public class ActivityResult extends AppCompatActivity {
                 final int cptfinal = cpt;
                 // Initialize a new RequestQueue instance
                 RequestQueue requestQueue = Volley.newRequestQueue(activity);
-                String url = "https://v4p4sz5ijk.execute-api.us-east-1.amazonaws.com/anbdata/states/notams/notams-list?api_key=72b1ee30-cdce-11e7-8f50-f15f214edab3&format=json&type=&Qcode=&locations=" + arrayList_ground.get(0).getName() + "&qstring=&states=&ICAOonly=false";
+                String url = "https://v4p4sz5ijk.execute-api.us-east-1.amazonaws.com/anbdata/states/notams/notams-list?api_key=72b1ee30-cdce-11e7-8f50-f15f214edab3&format=json&type=&Qcode=&locations=" + arrayList_ground.get(cpt).getName() + "&qstring=&states=&ICAOonly=false";
                 // Initialize a new JsonArrayRequest instance
                 JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
                         Request.Method.GET,
@@ -328,14 +330,14 @@ public class ActivityResult extends AppCompatActivity {
                                         String data = detail.getString("all");
                                         //TRAITEMENT
                                         if (data.indexOf("SNOWTAM ") != -1) {
-                                            Toast.makeText(activity, "data = " + data, Toast.LENGTH_SHORT).show();
+                                            //Toast.makeText(activity, "data = " + data, Toast.LENGTH_SHORT).show();
 
 
                                             if (data.indexOf("A) ") != -1) {
                                                 String raw[] = data.split("A[)]");
                                                 String part_atab[] = raw[1].split("[\n]");
                                                 part_a = part_atab[0];
-                                                Toast.makeText(activity, "A = " + part_a, Toast.LENGTH_SHORT).show();
+                                                //Toast.makeText(activity, "A = " + part_a, Toast.LENGTH_SHORT).show();
                                             }
                                             if (data.indexOf("B) ") != -1) {
                                                 String raw[] = data.split("B[)]");
@@ -343,10 +345,10 @@ public class ActivityResult extends AppCompatActivity {
                                                 if (part_tab[1].indexOf("\n") != -1) {
                                                     String part_tab2[] = part_tab[1].split("[\n]");
                                                     part_b = part_tab2[0];
-                                                    Toast.makeText(activity, "B = " + part_b, Toast.LENGTH_SHORT).show();
+                                                    //Toast.makeText(activity, "B = " + part_b, Toast.LENGTH_SHORT).show();
                                                 } else {
                                                     part_b = part_tab[1];
-                                                    Toast.makeText(activity, "B = " + part_b, Toast.LENGTH_SHORT).show();
+                                                    //Toast.makeText(activity, "B = " + part_b, Toast.LENGTH_SHORT).show();
                                                 }
 
                                             }
@@ -356,10 +358,10 @@ public class ActivityResult extends AppCompatActivity {
                                                 if (part_tab[1].indexOf("\n") != -1) {
                                                     String part_tab2[] = part_tab[1].split("[\n]");
                                                     part_b = part_tab2[0];
-                                                    Toast.makeText(activity, "C = " + part_b, Toast.LENGTH_SHORT).show();
+                                                    //Toast.makeText(activity, "C = " + part_b, Toast.LENGTH_SHORT).show();
                                                 } else {
                                                     part_c = part_tab[1];
-                                                    Toast.makeText(activity, "C = " + part_c, Toast.LENGTH_SHORT).show();
+                                                    //Toast.makeText(activity, "C = " + part_c, Toast.LENGTH_SHORT).show();
                                                 }
 
                                             }
@@ -369,10 +371,10 @@ public class ActivityResult extends AppCompatActivity {
                                                 if (part_tab[1].indexOf("\n") != -1) {
                                                     String part_tab2[] = part_tab[1].split("[\n]");
                                                     part_d = part_tab2[0];
-                                                    Toast.makeText(activity, "D = " + part_d, Toast.LENGTH_SHORT).show();
+                                                    //Toast.makeText(activity, "D = " + part_d, Toast.LENGTH_SHORT).show();
                                                 } else {
                                                     part_d = part_tab[1];
-                                                    Toast.makeText(activity, "D = " + part_d, Toast.LENGTH_SHORT).show();
+                                                    //Toast.makeText(activity, "D = " + part_d, Toast.LENGTH_SHORT).show();
                                                 }
 
                                             }
@@ -382,10 +384,10 @@ public class ActivityResult extends AppCompatActivity {
                                                 if (part_tab[1].indexOf("\n") != -1) {
                                                     String part_tab2[] = part_tab[1].split("[\n]");
                                                     part_e = part_tab2[0];
-                                                    Toast.makeText(activity, "E = " + part_e, Toast.LENGTH_SHORT).show();
+                                                    //Toast.makeText(activity, "E = " + part_e, Toast.LENGTH_SHORT).show();
                                                 } else {
                                                     part_e = part_tab[1];
-                                                    Toast.makeText(activity, "E = " + part_e, Toast.LENGTH_SHORT).show();
+                                                    //Toast.makeText(activity, "E = " + part_e, Toast.LENGTH_SHORT).show();
                                                 }
 
                                             }
@@ -395,10 +397,10 @@ public class ActivityResult extends AppCompatActivity {
                                                 if (part_tab[1].indexOf("\n") != -1) {
                                                     String part_tab2[] = part_tab[1].split("[\n]");
                                                     part_f = part_tab2[0];
-                                                    Toast.makeText(activity, "F = " + part_f, Toast.LENGTH_SHORT).show();
+                                                    //Toast.makeText(activity, "F = " + part_f, Toast.LENGTH_SHORT).show();
                                                 } else {
                                                     part_f = part_tab[1];
-                                                    Toast.makeText(activity, "F = " + part_f, Toast.LENGTH_SHORT).show();
+                                                    //Toast.makeText(activity, "F = " + part_f, Toast.LENGTH_SHORT).show();
                                                 }
 
                                             }
@@ -408,10 +410,10 @@ public class ActivityResult extends AppCompatActivity {
                                                 if (part_tab[1].indexOf("\n") != -1) {
                                                     String part_tab2[] = part_tab[1].split("[\n]");
                                                     part_g = part_tab2[0];
-                                                    Toast.makeText(activity, "G = " + part_g, Toast.LENGTH_SHORT).show();
+                                                    //Toast.makeText(activity, "G = " + part_g, Toast.LENGTH_SHORT).show();
                                                 } else {
                                                     part_g = part_tab[1];
-                                                    Toast.makeText(activity, "G = " + part_g, Toast.LENGTH_SHORT).show();
+                                                    //Toast.makeText(activity, "G = " + part_g, Toast.LENGTH_SHORT).show();
                                                 }
 
                                             }
@@ -421,10 +423,10 @@ public class ActivityResult extends AppCompatActivity {
                                                 if (part_tab[1].indexOf("\n") != -1) {
                                                     String part_tab2[] = part_tab[1].split("[\n]");
                                                     part_h = part_tab2[0];
-                                                    Toast.makeText(activity, "H = " + part_h, Toast.LENGTH_SHORT).show();
+                                                    //Toast.makeText(activity, "H = " + part_h, Toast.LENGTH_SHORT).show();
                                                 } else {
                                                     part_h = part_tab[1];
-                                                    Toast.makeText(activity, "H = " + part_h, Toast.LENGTH_SHORT).show();
+                                                    //Toast.makeText(activity, "H = " + part_h, Toast.LENGTH_SHORT).show();
                                                 }
 
                                             }
@@ -434,10 +436,10 @@ public class ActivityResult extends AppCompatActivity {
                                                 if (part_tab[1].indexOf("\n") != -1) {
                                                     String part_tab2[] = part_tab[1].split("[\n]");
                                                     part_j = part_tab2[0];
-                                                    Toast.makeText(activity, "J = " + part_j, Toast.LENGTH_SHORT).show();
+                                                    //Toast.makeText(activity, "J = " + part_j, Toast.LENGTH_SHORT).show();
                                                 } else {
                                                     part_j = part_tab[1];
-                                                    Toast.makeText(activity, "J = " + part_j, Toast.LENGTH_SHORT).show();
+                                                    //Toast.makeText(activity, "J = " + part_j, Toast.LENGTH_SHORT).show();
                                                 }
 
                                             }
@@ -447,10 +449,10 @@ public class ActivityResult extends AppCompatActivity {
                                                 if (part_tab[1].indexOf("\n") != -1) {
                                                     String part_tab2[] = part_tab[1].split("[\n]");
                                                     part_k = part_tab2[0];
-                                                    Toast.makeText(activity, "K = " + part_k, Toast.LENGTH_SHORT).show();
+                                                    //Toast.makeText(activity, "K = " + part_k, Toast.LENGTH_SHORT).show();
                                                 } else {
                                                     part_k = part_tab[1];
-                                                    Toast.makeText(activity, "K = " + part_k, Toast.LENGTH_SHORT).show();
+                                                    //Toast.makeText(activity, "K = " + part_k, Toast.LENGTH_SHORT).show();
                                                 }
 
                                             }
@@ -460,10 +462,10 @@ public class ActivityResult extends AppCompatActivity {
                                                 if (part_tab[1].indexOf("\n") != -1) {
                                                     String part_tab2[] = part_tab[1].split("[\n]");
                                                     part_l = part_tab2[0];
-                                                    Toast.makeText(activity, "L = " + part_l, Toast.LENGTH_SHORT).show();
+                                                    //Toast.makeText(activity, "L = " + part_l, Toast.LENGTH_SHORT).show();
                                                 } else {
                                                     part_l = part_tab[1];
-                                                    Toast.makeText(activity, "L = " + part_l, Toast.LENGTH_SHORT).show();
+                                                    //Toast.makeText(activity, "L = " + part_l, Toast.LENGTH_SHORT).show();
                                                 }
 
                                             }
@@ -473,10 +475,10 @@ public class ActivityResult extends AppCompatActivity {
                                                 if (part_tab[1].indexOf("\n") != -1) {
                                                     String part_tab2[] = part_tab[1].split("[\n]");
                                                     part_m = part_tab2[0];
-                                                    Toast.makeText(activity, "M = " + part_m, Toast.LENGTH_SHORT).show();
+                                                    //Toast.makeText(activity, "M = " + part_m, Toast.LENGTH_SHORT).show();
                                                 } else {
                                                     part_m = part_tab[1];
-                                                    Toast.makeText(activity, "M = " + part_m, Toast.LENGTH_SHORT).show();
+                                                    //Toast.makeText(activity, "M = " + part_m, Toast.LENGTH_SHORT).show();
                                                 }
 
                                             }
@@ -485,7 +487,7 @@ public class ActivityResult extends AppCompatActivity {
                                                 String part_tab[] = raw[1].split("[\n]");
 
                                                 part_n = part_tab[0];
-                                                Toast.makeText(activity, "N = " + part_n, Toast.LENGTH_SHORT).show();
+                                                //Toast.makeText(activity, "N = " + part_n, Toast.LENGTH_SHORT).show();
 
                                             }
                                             if (data.indexOf("P) ") != -1) {
@@ -493,7 +495,7 @@ public class ActivityResult extends AppCompatActivity {
                                                 String part_tab[] = raw[1].split("[\n]");
 
                                                 part_p = part_tab[0];
-                                                Toast.makeText(activity, "P = " + part_p, Toast.LENGTH_SHORT).show();
+                                                //Toast.makeText(activity, "P = " + part_p, Toast.LENGTH_SHORT).show();
 
                                             }
                                             if (data.indexOf("R) ") != -1) {
@@ -501,7 +503,7 @@ public class ActivityResult extends AppCompatActivity {
                                                 String part_tab[] = raw[1].split("[\n]");
 
                                                 part_r = part_tab[0];
-                                                Toast.makeText(activity, "R = " + part_r, Toast.LENGTH_SHORT).show();
+                                                //Toast.makeText(activity, "R = " + part_r, Toast.LENGTH_SHORT).show();
 
                                             }
                                             if (data.indexOf("S) ") != -1) {
@@ -510,10 +512,10 @@ public class ActivityResult extends AppCompatActivity {
                                                 if (part_tab[1].indexOf("\n") != -1) {
                                                     String part_tab2[] = part_tab[1].split("[\n]");
                                                     part_s = part_tab2[0];
-                                                    Toast.makeText(activity, "S = " + part_s, Toast.LENGTH_SHORT).show();
+                                                    //Toast.makeText(activity, "S = " + part_s, Toast.LENGTH_SHORT).show();
                                                 } else {
                                                     part_s = part_tab[1];
-                                                    Toast.makeText(activity, "S = " + part_s, Toast.LENGTH_SHORT).show();
+                                                    //Toast.makeText(activity, "S = " + part_s, Toast.LENGTH_SHORT).show();
                                                 }
 
                                             }
@@ -523,10 +525,10 @@ public class ActivityResult extends AppCompatActivity {
                                                 if (part_tab[1].indexOf("\n") != -1) {
                                                     String part_tab2[] = part_tab[1].split("[\n]");
                                                     part_t = part_tab2[0];
-                                                    Toast.makeText(activity, "T = " + part_t, Toast.LENGTH_SHORT).show();
+                                                    //Toast.makeText(activity, "T = " + part_t, Toast.LENGTH_SHORT).show();
                                                 } else {
                                                     part_t = part_tab[1];
-                                                    Toast.makeText(activity, "T = " + part_t, Toast.LENGTH_SHORT).show();
+                                                    //Toast.makeText(activity, "T = " + part_t, Toast.LENGTH_SHORT).show();
                                                 }
 
                                             }
@@ -555,7 +557,7 @@ public class ActivityResult extends AppCompatActivity {
                 requestQueue.add(jsonArrayRequest);
 
                 RequestQueue requestQueue2 = Volley.newRequestQueue(activity);
-                String url2 = "https://v4p4sz5ijk.execute-api.us-east-1.amazonaws.com/anbdata/airports/locations/doc7910?api_key=72b1ee30-cdce-11e7-8f50-f15f214edab3&airports=" + arrayList_ground.get(0).getName() + "&format=json";
+                String url2 = "https://v4p4sz5ijk.execute-api.us-east-1.amazonaws.com/anbdata/airports/locations/doc7910?api_key=72b1ee30-cdce-11e7-8f50-f15f214edab3&airports=" + arrayList_ground.get(cpt).getName() + "&format=json";
                 // Initialize a new JsonArrayRequest instance
                 JsonArrayRequest jsonArrayRequest2 = new JsonArrayRequest(
                         Request.Method.GET,
@@ -576,7 +578,7 @@ public class ActivityResult extends AppCompatActivity {
 
                                         String data = detail.getString("Location_Name");
                                         part_ad = data;
-                                        Toast.makeText(activity, "A = " + part_ad, Toast.LENGTH_SHORT).show();
+                                        //Toast.makeText(activity, "A = " + part_ad, Toast.LENGTH_SHORT).show();
 
 
 
@@ -612,6 +614,53 @@ public class ActivityResult extends AppCompatActivity {
 
 
         }
+
+    }
+    public void decrepting ()
+    {
+        if (part_b != "")
+        {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MMM d, HH:mm ");
+            Date converterDate = new Date();
+            try
+            {
+                converterDate = dateFormat.parse(part_b);
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            part_bd = converterDate.toString();
+        }
+        if(part_c != "")
+        {
+            part_cd = "RUNWAY"+part_c;
+        }
+        if(part_d != "")
+        {
+            part_dd = "CLEARED RUNWAY LENGTH "+part_d+"M";
+        }
+        if(part_e != "")
+        {
+            String diretion [] = part_e.split("\\s+");
+            if(diretion[1] == "R") part_ed = "CLEARED RUNWAY WIDTH "+diretion[0]+"M RIGHT";
+            if(diretion[1] == "L") part_ed = "CLEARED RUNWAY WIDTH "+diretion[0]+"M LEFT";
+        }
+        if(part_f != "")
+        {
+            String instruction [] = part_f.split("[/]");
+
+            for( int i = 0; i < instruction.length; i++)
+            {
+                if(instruction[i].indexOf("0") != -1)
+                {
+
+
+                }
+            }
+        }
+
+
+
 
     }
 }
