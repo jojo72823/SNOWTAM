@@ -47,41 +47,8 @@ import daumont.caspar.ensim.snowtam.R;
 import daumont.caspar.ensim.snowtam.utils.Methods;
 
 public class ActivityResult extends AppCompatActivity {
-
-    public String part_a = "";
-    public String part_b = "";
-    public String part_c = "";
-    public String part_d = "";
-    public String part_e = "";
-    public String part_f = "";
-    public String part_g = "";
-    public String part_h = "";
-    public String part_j = "";
-    public String part_k = "";
-    public String part_l = "";
-    public String part_m = "";
-    public String part_n = "";
-    public String part_p = "";
-    public String part_r = "";
-    public String part_s = "";
-    public String part_t = "";
-    public String part_ad = "";
-    public String part_bd = "";
-    public String part_cd = "";
-    public String part_dd = "";
-    public String part_ed = "";
-    public String part_fd = "";
-    public String part_gd = "";
-    public String part_hd = "";
-    public String part_jd = "";
-    public String part_kd = "";
-    public String part_ld = "";
-    public String part_md = "";
-    public String part_nd = "";
-    public String part_pd = "";
-    public String part_rd = "";
-    public String part_sd = "";
-    public String part_td = "";
+    public String  [] Snowtam_partc = new String [17];
+    public String [] Snowtam_partd = new String [17];
     public String data = "";
     public Boolean find_snowtam = false;
     /**
@@ -330,7 +297,7 @@ public class ActivityResult extends AppCompatActivity {
                                             if (data.indexOf("A) ") != -1) {
                                                 String raw[] = data.split("A[)]");
                                                 String part_atab[] = raw[1].split("[\n]");
-                                                part_a = part_atab[0];
+                                                Snowtam_partc[0] = part_atab[0];
                                                 //Toast.makeText(activity, "A = " + part_a, Toast.LENGTH_SHORT).show();
                                             }
                                             if (data.indexOf("B) ") != -1) {
@@ -338,10 +305,10 @@ public class ActivityResult extends AppCompatActivity {
                                                 String part_tab[] = raw[1].split("[ ]");
                                                 if (part_tab[1].indexOf("\n") != -1) {
                                                     String part_tab2[] = part_tab[1].split("[\n]");
-                                                    part_b = part_tab2[0];
+                                                    Snowtam_partc[1] = part_tab2[0];
                                                     //Toast.makeText(activity, "B = " + part_b, Toast.LENGTH_SHORT).show();
                                                 } else {
-                                                    part_b = part_tab[1];
+                                                    Snowtam_partc[1] = part_tab[1];
                                                     //Toast.makeText(activity, "B = " + part_b, Toast.LENGTH_SHORT).show();
                                                 }
 
@@ -351,10 +318,10 @@ public class ActivityResult extends AppCompatActivity {
                                                 String part_tab[] = raw[1].split("[ ]");
                                                 if (part_tab[1].indexOf("\n") != -1) {
                                                     String part_tab2[] = part_tab[1].split("[\n]");
-                                                    part_c = part_tab2[0];
+                                                    Snowtam_partc[2] = part_tab2[0];
                                                     //Toast.makeText(activity, "C = " + part_b, Toast.LENGTH_SHORT).show();
                                                 } else {
-                                                    part_c = part_tab[1];
+                                                    Snowtam_partc[2] = part_tab[1];
                                                     //Toast.makeText(activity, "C = " + part_c, Toast.LENGTH_SHORT).show();
                                                 }
 
@@ -364,10 +331,10 @@ public class ActivityResult extends AppCompatActivity {
                                                 String part_tab[] = raw[1].split("[ ]");
                                                 if (part_tab[1].indexOf("\n") != -1) {
                                                     String part_tab2[] = part_tab[1].split("[\n]");
-                                                    part_d = part_tab2[0];
+                                                    Snowtam_partc[3] = part_tab2[0];
                                                     //Toast.makeText(activity, "D = " + part_d, Toast.LENGTH_SHORT).show();
                                                 } else {
-                                                    part_d = part_tab[1];
+                                                    Snowtam_partc[3] = part_tab[1];
                                                     //Toast.makeText(activity, "D = " + part_d, Toast.LENGTH_SHORT).show();
                                                 }
 
@@ -377,10 +344,10 @@ public class ActivityResult extends AppCompatActivity {
                                                 String part_tab[] = raw[1].split("[ ]");
                                                 if (part_tab[1].indexOf("\n") != -1) {
                                                     String part_tab2[] = part_tab[1].split("[\n]");
-                                                    part_e = part_tab2[0];
+                                                    Snowtam_partc[4] = part_tab2[0];
                                                     //Toast.makeText(activity, "E = " + part_e, Toast.LENGTH_SHORT).show();
                                                 } else {
-                                                    part_e = part_tab[1];
+                                                    Snowtam_partc[4] = part_tab[1];
                                                     //Toast.makeText(activity, "E = " + part_e, Toast.LENGTH_SHORT).show();
                                                 }
 
@@ -390,10 +357,10 @@ public class ActivityResult extends AppCompatActivity {
                                                 String part_tab[] = raw[1].split("[ ]");
                                                 if (part_tab[1].indexOf("\n") != -1) {
                                                     String part_tab2[] = part_tab[1].split("[\n]");
-                                                    part_f = part_tab2[0];
+                                                    Snowtam_partc[5] = part_tab2[0];
                                                     //Toast.makeText(activity, "F = " + part_f, Toast.LENGTH_SHORT).show();
                                                 } else {
-                                                    part_f = part_tab[1];
+                                                    Snowtam_partc[5] = part_tab[1];
                                                     //Toast.makeText(activity, "F = " + part_f, Toast.LENGTH_SHORT).show();
                                                 }
 
@@ -403,10 +370,10 @@ public class ActivityResult extends AppCompatActivity {
                                                 String part_tab[] = raw[1].split("[ ]");
                                                 if (part_tab[1].indexOf("\n") != -1) {
                                                     String part_tab2[] = part_tab[1].split("[\n]");
-                                                    part_g = part_tab2[0];
+                                                    Snowtam_partc[6] = part_tab2[0];
                                                     //Toast.makeText(activity, "G = " + part_g, Toast.LENGTH_SHORT).show();
                                                 } else {
-                                                    part_g = part_tab[1];
+                                                    Snowtam_partc[6] = part_tab[1];
                                                     //Toast.makeText(activity, "G = " + part_g, Toast.LENGTH_SHORT).show();
                                                 }
 
@@ -416,10 +383,10 @@ public class ActivityResult extends AppCompatActivity {
                                                 String part_tab[] = raw[1].split("[ ]");
                                                 if (part_tab[1].indexOf("\n") != -1) {
                                                     String part_tab2[] = part_tab[1].split("[\n]");
-                                                    part_h = part_tab2[0];
+                                                    Snowtam_partc[7] = part_tab2[0];
                                                     //Toast.makeText(activity, "H = " + part_h, Toast.LENGTH_SHORT).show();
                                                 } else {
-                                                    part_h = part_tab[1];
+                                                    Snowtam_partc[7] = part_tab[1];
                                                     //Toast.makeText(activity, "H = " + part_h, Toast.LENGTH_SHORT).show();
                                                 }
 
@@ -429,10 +396,10 @@ public class ActivityResult extends AppCompatActivity {
                                                 String part_tab[] = raw[1].split("[ ]");
                                                 if (part_tab[1].indexOf("\n") != -1) {
                                                     String part_tab2[] = part_tab[1].split("[\n]");
-                                                    part_j = part_tab2[0];
+                                                    Snowtam_partc[8] = part_tab2[0];
                                                     //Toast.makeText(activity, "J = " + part_j, Toast.LENGTH_SHORT).show();
                                                 } else {
-                                                    part_j = part_tab[1];
+                                                    Snowtam_partc[8] = part_tab[1];
                                                     //Toast.makeText(activity, "J = " + part_j, Toast.LENGTH_SHORT).show();
                                                 }
 
@@ -442,10 +409,10 @@ public class ActivityResult extends AppCompatActivity {
                                                 String part_tab[] = raw[1].split("[ ]");
                                                 if (part_tab[1].indexOf("\n") != -1) {
                                                     String part_tab2[] = part_tab[1].split("[\n]");
-                                                    part_k = part_tab2[0];
+                                                    Snowtam_partc[9] = part_tab2[0];
                                                     //Toast.makeText(activity, "K = " + part_k, Toast.LENGTH_SHORT).show();
                                                 } else {
-                                                    part_k = part_tab[1];
+                                                    Snowtam_partc[9] = part_tab[1];
                                                     //Toast.makeText(activity, "K = " + part_k, Toast.LENGTH_SHORT).show();
                                                 }
 
@@ -455,10 +422,10 @@ public class ActivityResult extends AppCompatActivity {
                                                 String part_tab[] = raw[1].split("[ ]");
                                                 if (part_tab[1].indexOf("\n") != -1) {
                                                     String part_tab2[] = part_tab[1].split("[\n]");
-                                                    part_l = part_tab2[0];
+                                                    Snowtam_partc[10] = part_tab2[0];
                                                     //Toast.makeText(activity, "L = " + part_l, Toast.LENGTH_SHORT).show();
                                                 } else {
-                                                    part_l = part_tab[1];
+                                                    Snowtam_partc[10] = part_tab[1];
                                                     //Toast.makeText(activity, "L = " + part_l, Toast.LENGTH_SHORT).show();
                                                 }
 
@@ -468,10 +435,10 @@ public class ActivityResult extends AppCompatActivity {
                                                 String part_tab[] = raw[1].split("[ ]");
                                                 if (part_tab[1].indexOf("\n") != -1) {
                                                     String part_tab2[] = part_tab[1].split("[\n]");
-                                                    part_m = part_tab2[0];
+                                                    Snowtam_partc[11] = part_tab2[0];
                                                     //Toast.makeText(activity, "M = " + part_m, Toast.LENGTH_SHORT).show();
                                                 } else {
-                                                    part_m = part_tab[1];
+                                                    Snowtam_partc[11] = part_tab[1];
                                                     //Toast.makeText(activity, "M = " + part_m, Toast.LENGTH_SHORT).show();
                                                 }
 
@@ -480,7 +447,7 @@ public class ActivityResult extends AppCompatActivity {
                                                 String raw[] = data.split("N[)]");
                                                 String part_tab[] = raw[1].split("[\n]");
 
-                                                part_n = part_tab[0];
+                                                Snowtam_partc[12] = part_tab[0];
                                                 //Toast.makeText(activity, "N = " + part_n, Toast.LENGTH_SHORT).show();
 
                                             }
@@ -488,7 +455,7 @@ public class ActivityResult extends AppCompatActivity {
                                                 String raw[] = data.split("P[)]");
                                                 String part_tab[] = raw[1].split("[\n]");
 
-                                                part_p = part_tab[0];
+                                                Snowtam_partc[13] = part_tab[0];
                                                 //Toast.makeText(activity, "P = " + part_p, Toast.LENGTH_SHORT).show();
 
                                             }
@@ -496,7 +463,7 @@ public class ActivityResult extends AppCompatActivity {
                                                 String raw[] = data.split("R[)]");
                                                 String part_tab[] = raw[1].split("[\n]");
 
-                                                part_r = part_tab[0];
+                                                Snowtam_partc[14] = part_tab[0];
                                                 //Toast.makeText(activity, "R = " + part_r, Toast.LENGTH_SHORT).show();
 
                                             }
@@ -505,10 +472,10 @@ public class ActivityResult extends AppCompatActivity {
                                                 String part_tab[] = raw[1].split("[ ]");
                                                 if (part_tab[1].indexOf("\n") != -1) {
                                                     String part_tab2[] = part_tab[1].split("[\n]");
-                                                    part_s = part_tab2[0];
+                                                    Snowtam_partc[15] = part_tab2[0];
                                                     //Toast.makeText(activity, "S = " + part_s, Toast.LENGTH_SHORT).show();
                                                 } else {
-                                                    part_s = part_tab[1];
+                                                    Snowtam_partc[15] = part_tab[1];
                                                     //Toast.makeText(activity, "S = " + part_s, Toast.LENGTH_SHORT).show();
                                                 }
 
@@ -518,10 +485,10 @@ public class ActivityResult extends AppCompatActivity {
                                                 String part_tab[] = raw[1].split("[ ]");
                                                 if (part_tab[1].indexOf("\n") != -1) {
                                                     String part_tab2[] = part_tab[1].split("[\n]");
-                                                    part_t = part_tab2[0];
+                                                    Snowtam_partc[16] = part_tab2[0];
                                                     //Toast.makeText(activity, "T = " + part_t, Toast.LENGTH_SHORT).show();
                                                 } else {
-                                                    part_t = part_tab[1];
+                                                    Snowtam_partc[16] = part_tab[1];
                                                     //Toast.makeText(activity, "T = " + part_t, Toast.LENGTH_SHORT).show();
                                                 }
 
@@ -536,44 +503,45 @@ public class ActivityResult extends AppCompatActivity {
 
                                     find_snowtam = false;
 
-                                    if (part_b != "") {
+                                    if (Snowtam_partc[1] != null) {
                                         SimpleDateFormat dateFormat = new SimpleDateFormat("MMM d, HH:mm ");
                                         Date converterDate = new Date();
                                         try {
-                                            converterDate = dateFormat.parse(part_b);
+                                            converterDate = dateFormat.parse(Snowtam_partc[1]);
 
                                         } catch (ParseException e) {
                                             e.printStackTrace();
                                         }
-                                        part_bd = converterDate.toString();
+                                        Snowtam_partd[1] = converterDate.toString();
                                     }
-                                    if (part_c != "") {
-                                        part_cd = getString(R.string.part_cs) + part_c;
+                                    if (Snowtam_partc[2] != null) {
+                                        Snowtam_partd[2] = getString(R.string.part_cs) + Snowtam_partc[2];
                                     }
-                                    if (part_d != "") {
-                                        part_dd = getString(R.string.part_ds) + getString(R.string.m);
+                                    if (Snowtam_partc[3] != null) {
+                                        Snowtam_partd[3] = getString(R.string.part_ds) + getString(R.string.m);
                                     }
-                                    if (part_e != "") {
-                                        String diretion[] = part_e.split("\\s+");
+                                    if (Snowtam_partc[4] != null) {
+                                        String diretion[] = Snowtam_partc[4].split("\\s+");
                                         if (diretion[1] == "R")
-                                            part_ed = getString(R.string.part_es) + diretion[0] + getString(R.string.part_esr);
+                                            Snowtam_partd[4] = getString(R.string.part_es) + diretion[0] + getString(R.string.part_esr);
                                         if (diretion[1] == "L")
-                                            part_ed = getString(R.string.part_es) + diretion[0] + getString(R.string.part_esr);
+                                            Snowtam_partd[4] = getString(R.string.part_es) + diretion[0] + getString(R.string.part_esr);
                                     }
-                                    if (part_f != "") {
-                                        String instruction[] = part_f.split("[/]");
+                                    if (Snowtam_partc[5] != null) {
+                                        String instruction[] = Snowtam_partc[5].split("[/]");
+                                        Snowtam_partd[5] = "";
 
                                         for (int i = 0; i < instruction.length; i++) {
                                             if (instruction[i].indexOf("0") != -1) {
                                                 switch (i) {
                                                     case 0:
-                                                        part_fd += getString(R.string.threshold) + getString(R.string.part_fs0);
+                                                        Snowtam_partd[5] += getString(R.string.threshold) + getString(R.string.part_fs0);
                                                         break;
                                                     case 1:
-                                                        part_fd += getString(R.string.mid_runway) + getString(R.string.part_fs0);
+                                                        Snowtam_partd[5] += getString(R.string.mid_runway) + getString(R.string.part_fs0);
                                                         break;
                                                     case 2:
-                                                        part_fd += getString(R.string.roll_out) + getString(R.string.part_fs0);
+                                                        Snowtam_partd[5] += getString(R.string.roll_out) + getString(R.string.part_fs0);
                                                         break;
                                                 }
 
@@ -581,117 +549,117 @@ public class ActivityResult extends AppCompatActivity {
                                             } else if (instruction[i].indexOf("1") != -1) {
                                                 switch (i) {
                                                     case 0:
-                                                        part_fd += getString(R.string.threshold) + getString(R.string.part_fs1);
+                                                        Snowtam_partd[5] += getString(R.string.threshold) + getString(R.string.part_fs1);
                                                         break;
                                                     case 1:
-                                                        part_fd += getString(R.string.mid_runway) + getString(R.string.part_fs1);
+                                                        Snowtam_partd[5] += getString(R.string.mid_runway) + getString(R.string.part_fs1);
                                                         break;
                                                     case 2:
-                                                        part_fd += getString(R.string.roll_out) + getString(R.string.part_fs1);
+                                                        Snowtam_partd[5] += getString(R.string.roll_out) + getString(R.string.part_fs1);
                                                         break;
                                                 }
 
                                             } else if (instruction[i].indexOf("2") != -1) {
                                                 switch (i) {
                                                     case 0:
-                                                        part_fd += getString(R.string.threshold) + getString(R.string.part_fs2);
+                                                        Snowtam_partd[5] += getString(R.string.threshold) + getString(R.string.part_fs2);
                                                         break;
                                                     case 1:
-                                                        part_fd += getString(R.string.mid_runway) + getString(R.string.part_fs2);
+                                                        Snowtam_partd[5] += getString(R.string.mid_runway) + getString(R.string.part_fs2);
                                                         break;
                                                     case 2:
-                                                        part_fd += getString(R.string.roll_out) + getString(R.string.part_fs2);
+                                                        Snowtam_partd[5] += getString(R.string.roll_out) + getString(R.string.part_fs2);
                                                         break;
                                                 }
 
                                             } else if (instruction[i].indexOf("3") != -1) {
                                                 switch (i) {
                                                     case 0:
-                                                        part_fd += getString(R.string.threshold) + getString(R.string.part_fs3);
+                                                        Snowtam_partd[5] += getString(R.string.threshold) + getString(R.string.part_fs3);
                                                         break;
                                                     case 1:
-                                                        part_fd += getString(R.string.mid_runway) + getString(R.string.part_fs3);
+                                                        Snowtam_partd[5] += getString(R.string.mid_runway) + getString(R.string.part_fs3);
                                                         break;
                                                     case 2:
-                                                        part_fd += getString(R.string.roll_out) + getString(R.string.part_fs3);
+                                                        Snowtam_partd[5] += getString(R.string.roll_out) + getString(R.string.part_fs3);
                                                         break;
                                                 }
 
                                             } else if (instruction[i].indexOf("4") != -1) {
                                                 switch (i) {
                                                     case 0:
-                                                        part_fd += getString(R.string.threshold) + getString(R.string.part_fs4);
+                                                        Snowtam_partd[5] += getString(R.string.threshold) + getString(R.string.part_fs4);
                                                         break;
                                                     case 1:
-                                                        part_fd += getString(R.string.mid_runway) + getString(R.string.part_fs4);
+                                                        Snowtam_partd[5] += getString(R.string.mid_runway) + getString(R.string.part_fs4);
                                                         break;
                                                     case 2:
-                                                        part_fd += getString(R.string.roll_out) + getString(R.string.part_fs4);
+                                                        Snowtam_partd[5] += getString(R.string.roll_out) + getString(R.string.part_fs4);
                                                         break;
                                                 }
 
                                             } else if (instruction[i].indexOf("5") != -1) {
                                                 switch (i) {
                                                     case 0:
-                                                        part_fd += getString(R.string.threshold) + getString(R.string.part_fs5);
+                                                        Snowtam_partd[5] += getString(R.string.threshold) + getString(R.string.part_fs5);
                                                         break;
                                                     case 1:
-                                                        part_fd += getString(R.string.mid_runway) + getString(R.string.part_fs5);
+                                                        Snowtam_partd[5] += getString(R.string.mid_runway) + getString(R.string.part_fs5);
                                                         break;
                                                     case 2:
-                                                        part_fd += getString(R.string.roll_out) + getString(R.string.part_fs5);
+                                                        Snowtam_partd[5] += getString(R.string.roll_out) + getString(R.string.part_fs5);
                                                         break;
                                                 }
 
                                             } else if (instruction[i].indexOf("6") != -1) {
                                                 switch (i) {
                                                     case 0:
-                                                        part_fd += getString(R.string.threshold) + getString(R.string.part_fs6);
+                                                        Snowtam_partd[5] += getString(R.string.threshold) + getString(R.string.part_fs6);
                                                         break;
                                                     case 1:
-                                                        part_fd += getString(R.string.mid_runway) + getString(R.string.part_fs6);
+                                                        Snowtam_partd[5] += getString(R.string.mid_runway) + getString(R.string.part_fs6);
                                                         break;
                                                     case 2:
-                                                        part_fd += getString(R.string.roll_out) + getString(R.string.part_fs6);
+                                                        Snowtam_partd[5] += getString(R.string.roll_out) + getString(R.string.part_fs6);
                                                         break;
                                                 }
 
                                             } else if (instruction[i].indexOf("7") != -1) {
                                                 switch (i) {
                                                     case 0:
-                                                        part_fd += getString(R.string.threshold) + getString(R.string.part_fs7);
+                                                        Snowtam_partd[5] += getString(R.string.threshold) + getString(R.string.part_fs7);
                                                         break;
                                                     case 1:
-                                                        part_fd += getString(R.string.mid_runway) + getString(R.string.part_fs7);
+                                                        Snowtam_partd[5] += getString(R.string.mid_runway) + getString(R.string.part_fs7);
                                                         break;
                                                     case 2:
-                                                        part_fd += getString(R.string.roll_out) + getString(R.string.part_fs7);
+                                                        Snowtam_partd[5] += getString(R.string.roll_out) + getString(R.string.part_fs7);
                                                         break;
                                                 }
 
                                             } else if (instruction[i].indexOf("8") != -1) {
                                                 switch (i) {
                                                     case 0:
-                                                        part_fd += getString(R.string.threshold) + getString(R.string.part_fs8);
+                                                        Snowtam_partd[5] += getString(R.string.threshold) + getString(R.string.part_fs8);
                                                         break;
                                                     case 1:
-                                                        part_fd += getString(R.string.mid_runway) + getString(R.string.part_fs8);
+                                                        Snowtam_partd[5] += getString(R.string.mid_runway) + getString(R.string.part_fs8);
                                                         break;
                                                     case 2:
-                                                        part_fd += getString(R.string.roll_out) + getString(R.string.part_fs8);
+                                                        Snowtam_partd[5] += getString(R.string.roll_out) + getString(R.string.part_fs8);
                                                         break;
                                                 }
 
                                             } else if (instruction[i].indexOf("9") != -1) {
                                                 switch (i) {
                                                     case 0:
-                                                        part_fd += getString(R.string.threshold) + getString(R.string.part_fs9);
+                                                        Snowtam_partd[5] += getString(R.string.threshold) + getString(R.string.part_fs9);
                                                         break;
                                                     case 1:
-                                                        part_fd += getString(R.string.mid_runway) + getString(R.string.part_fs9);
+                                                        Snowtam_partd[5] += getString(R.string.mid_runway) + getString(R.string.part_fs9);
                                                         break;
                                                     case 2:
-                                                        part_fd += getString(R.string.roll_out) + getString(R.string.part_fs9);
+                                                        Snowtam_partd[5] += getString(R.string.roll_out) + getString(R.string.part_fs9);
                                                         break;
                                                 }
 
@@ -699,7 +667,7 @@ public class ActivityResult extends AppCompatActivity {
                                         }
                                     }
 
-                                    resultat_chaine ="B) "+part_bd + "\n" +"C) "+ part_cd + "\n" +"D) "+ part_dd + "\n" +"E) "+ part_ed + "\n" +"F) "+ part_fd + "\n";
+                                    resultat_chaine ="B) "+Snowtam_partd[1] + "\n" +"C) "+ Snowtam_partd[2] + "\n" +"D) "+ Snowtam_partd[3] + "\n" +"E) "+ Snowtam_partd[4] + "\n" +"F) "+ Snowtam_partd[5] + "\n";
                                     arrayList_ground.get(cptfinal).setSnowtam_decoded(resultat_chaine);
 
                                 } catch (JSONException e) {
@@ -715,6 +683,12 @@ public class ActivityResult extends AppCompatActivity {
                             }
                         }
                 );
+
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
                 // Add JsonArrayRequest to the RequestQueue
                 requestQueue.add(jsonArrayRequest);
@@ -745,8 +719,8 @@ public class ActivityResult extends AppCompatActivity {
 
                                         arrayList_ground.get(cptfinal).setLatLng(new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude)));
                                         String resultbegin =  arrayList_ground.get(cptfinal).getSnowtam_decoded();
-                                        part_ad = "A) " +data;
-                                        String deco = part_ad+"\n"+resultbegin;
+                                        Snowtam_partd[0] = "A) " +data;
+                                        String deco = Snowtam_partd[0]+"\n"+resultbegin;
                                         arrayList_ground.get(cptfinal).setSnowtam_decoded(deco);
                                         //Toast.makeText(activity, "A = " + part_ad, Toast.LENGTH_SHORT).show();
 
