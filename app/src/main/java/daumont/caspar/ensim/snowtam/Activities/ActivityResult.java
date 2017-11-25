@@ -482,15 +482,9 @@ public class ActivityResult extends AppCompatActivity {
                                             }
                                             if (data.indexOf("T) ") != -1) {
                                                 String raw[] = data.split("T[)]");
-                                                String part_tab[] = raw[1].split("[ ]");
-                                                if (part_tab[1].indexOf("\n") != -1) {
-                                                    String part_tab2[] = part_tab[1].split("[\n]");
-                                                    Snowtam_partc[16] = part_tab2[0];
-                                                    //Toast.makeText(activity, "T = " + part_t, Toast.LENGTH_SHORT).show();
-                                                } else {
-                                                    Snowtam_partc[16] = part_tab[1];
-                                                    //Toast.makeText(activity, "T = " + part_t, Toast.LENGTH_SHORT).show();
-                                                }
+                                                String part_tab[] = raw[1].split("[\n]");
+
+                                                Snowtam_partc[16] = part_tab[0];
 
                                             }
 
@@ -512,24 +506,24 @@ public class ActivityResult extends AppCompatActivity {
                                         } catch (ParseException e) {
                                             e.printStackTrace();
                                         }
-                                        Snowtam_partd[1] = converterDate.toString();
+                                        Snowtam_partd[1] = "B) " + converterDate.toString();
                                     }
                                     if (Snowtam_partc[2] != null) {
-                                        Snowtam_partd[2] = getString(R.string.part_cs) + Snowtam_partc[2];
+                                        Snowtam_partd[2] = "C) "+getString(R.string.runway) + Snowtam_partc[2];
                                     }
                                     if (Snowtam_partc[3] != null) {
-                                        Snowtam_partd[3] = getString(R.string.part_ds) + getString(R.string.m);
+                                        Snowtam_partd[3] = "D) "+getString(R.string.part_ds) + getString(R.string.m);
                                     }
                                     if (Snowtam_partc[4] != null) {
                                         String diretion[] = Snowtam_partc[4].split("\\s+");
                                         if (diretion[1] == "R")
-                                            Snowtam_partd[4] = getString(R.string.part_es) + diretion[0] + getString(R.string.part_esr);
+                                            Snowtam_partd[4] = "E) "+getString(R.string.part_es) + diretion[0] + getString(R.string.m)+" "+getString(R.string.right);
                                         if (diretion[1] == "L")
-                                            Snowtam_partd[4] = getString(R.string.part_es) + diretion[0] + getString(R.string.part_esr);
+                                            Snowtam_partd[4] = "E) "+getString(R.string.part_es) + diretion[0] + getString(R.string.m)+" "+getString(R.string.left);
                                     }
                                     if (Snowtam_partc[5] != null) {
                                         String instruction[] = Snowtam_partc[5].split("[/]");
-                                        Snowtam_partd[5] = "";
+                                        Snowtam_partd[5] = "F) ";
 
                                         for (int i = 0; i < instruction.length; i++) {
                                             if (instruction[i].indexOf("0") != -1) {
@@ -664,10 +658,225 @@ public class ActivityResult extends AppCompatActivity {
                                                 }
 
                                             }
+                                            else
+                                            {
+                                                switch (i) {
+                                                    case 0:
+                                                        Snowtam_partd[5] += getString(R.string.threshold) + getString(R.string.nil);
+                                                        break;
+                                                    case 1:
+                                                        Snowtam_partd[5] += getString(R.string.mid_runway) + getString(R.string.nil);
+                                                        break;
+                                                    case 2:
+                                                        Snowtam_partd[5] += getString(R.string.roll_out) + getString(R.string.nil);
+                                                        break;
+                                                }
+
+                                            }
                                         }
                                     }
+                                    if (Snowtam_partc[6] != null)
+                                    {
+                                        String instruction[] = Snowtam_partc[6].split("[/]");
+                                        Snowtam_partd[6] = "";
+                                        Snowtam_partd[6] = "G) "+ getString(R.string.threshold) + instruction[0]+getString(R.string.mm)+getString(R.string.mid_runway)+instruction[1]+getString(R.string.mm)+getString(R.string.roll_out)+instruction[2]+getString(R.string.mm);
+                                    }
+                                    if (Snowtam_partc[7] != null)
+                                    {
+                                        String instruction[] = Snowtam_partc[7].split("[/]");
+                                        String instruction2[] = instruction[2].split(" ");
+                                        Snowtam_partd[7] = "H) ";
 
-                                    resultat_chaine ="B) "+Snowtam_partd[1] + "\n" +"C) "+ Snowtam_partd[2] + "\n" +"D) "+ Snowtam_partd[3] + "\n" +"E) "+ Snowtam_partd[4] + "\n" +"F) "+ Snowtam_partd[5] + "\n";
+                                        for(int i = 0; i < instruction.length;i++)
+                                        {
+                                            if(i == 2)
+                                            {
+                                                if (Integer.parseInt(instruction2[0]) >= 40 || Integer.parseInt(instruction2[0]) == 5)
+                                                {
+                                                    Snowtam_partd[7] += getString(R.string.roll_out) + getString(R.string.good);
+                                                }
+                                                else if ((Integer.parseInt(instruction2[0]) <= 39  && Integer.parseInt(instruction2[0]) >= 36) || Integer.parseInt(instruction2[0]) == 4)
+                                                {
+                                                    Snowtam_partd[7] += getString(R.string.roll_out) + getString(R.string.MG);
+                                                }
+                                                else if ((Integer.parseInt(instruction2[0]) <= 35  && Integer.parseInt(instruction2[0]) >= 30) || Integer.parseInt(instruction2[0]) == 3)
+                                                {
+                                                    Snowtam_partd[7] += getString(R.string.roll_out) + getString(R.string.medium);
+                                                }
+                                                else if ((Integer.parseInt(instruction2[0]) <= 29  && Integer.parseInt(instruction2[0]) >= 26) || Integer.parseInt(instruction2[0]) == 2)
+                                                {
+                                                    Snowtam_partd[7] += getString(R.string.roll_out) + getString(R.string.MP);
+                                                }
+                                                else if (Integer.parseInt(instruction2[0]) <= 25   || Integer.parseInt(instruction2[0]) == 1)
+                                                {
+                                                    Snowtam_partd[7] += getString(R.string.roll_out) + getString(R.string.poor);
+                                                }
+
+                                            }
+                                            else if (Integer.parseInt(instruction[i]) >= 40 || Integer.parseInt(instruction[i]) == 5) {
+                                                switch (i) {
+                                                    case 0:
+                                                        Snowtam_partd[7] += getString(R.string.threshold) + getString(R.string.good);
+                                                        break;
+                                                    case 1:
+                                                        Snowtam_partd[7] += getString(R.string.mid_runway) + getString(R.string.good);
+                                                        break;
+                                                }
+
+
+                                            }
+                                            else if ((Integer.parseInt(instruction[i]) <= 39  && Integer.parseInt(instruction[i]) >= 36) || Integer.parseInt(instruction[i]) == 4) {
+                                                switch (i) {
+                                                    case 0:
+                                                        Snowtam_partd[7] += getString(R.string.threshold) + getString(R.string.MG);
+                                                        break;
+                                                    case 1:
+                                                        Snowtam_partd[7] += getString(R.string.mid_runway) + getString(R.string.MG);
+                                                        break;
+                                                }
+
+
+                                            }
+                                            else if ((Integer.parseInt(instruction[i]) <= 35  && Integer.parseInt(instruction[i]) >= 30) || Integer.parseInt(instruction[i]) == 3) {
+                                                switch (i) {
+                                                    case 0:
+                                                        Snowtam_partd[7] += getString(R.string.threshold) + getString(R.string.medium);
+                                                        break;
+                                                    case 1:
+                                                        Snowtam_partd[7] += getString(R.string.mid_runway) + getString(R.string.medium);
+                                                        break;
+                                                }
+
+
+                                            }
+                                            else if ((Integer.parseInt(instruction[i]) <= 29  && Integer.parseInt(instruction[i]) >= 26) || Integer.parseInt(instruction[i]) == 2) {
+                                            switch (i) {
+                                                case 0:
+                                                    Snowtam_partd[7] += getString(R.string.threshold) + getString(R.string.MP);
+                                                    break;
+                                                case 1:
+                                                    Snowtam_partd[7] += getString(R.string.mid_runway) + getString(R.string.MP);
+                                                    break;
+                                                 }
+
+
+                                            }
+                                            else if (Integer.parseInt(instruction[i]) <= 25   || Integer.parseInt(instruction[i]) == 1) {
+                                                switch (i) {
+                                                    case 0:
+                                                        Snowtam_partd[7] += getString(R.string.threshold) + getString(R.string.poor);
+                                                        break;
+                                                    case 1:
+                                                        Snowtam_partd[7] += getString(R.string.mid_runway) + getString(R.string.poor);
+                                                        break;
+                                                }
+
+
+                                            }
+
+                                        }
+
+                                        if(instruction2.length > 1)
+                                        {
+                                            if(instruction2[1].indexOf("BRD") != -1)Snowtam_partd[7] += getString(R.string.instrument)+getString(R.string.brd);
+                                            else if(instruction2[1].indexOf("GRT") != -1)Snowtam_partd[7] += getString(R.string.instrument)+getString(R.string.grt);
+                                            else if(instruction2[1].indexOf("MUM") != -1)Snowtam_partd[7] += getString(R.string.instrument)+getString(R.string.mum);
+                                            else if(instruction2[1].indexOf("RFT") != -1)Snowtam_partd[7] += getString(R.string.instrument)+getString(R.string.rft);
+                                            else if(instruction2[1].indexOf("SFH") != -1)Snowtam_partd[7] += getString(R.string.instrument)+getString(R.string.sfh);
+                                            else if(instruction2[1].indexOf("SFL") != -1)Snowtam_partd[7] += getString(R.string.instrument)+getString(R.string.sfl);
+                                            else if(instruction2[1].indexOf("SKH") != -1)Snowtam_partd[7] += getString(R.string.instrument)+getString(R.string.skh);
+                                            else if(instruction2[1].indexOf("SKL") != -1)Snowtam_partd[7] += getString(R.string.instrument)+getString(R.string.skl);
+                                            else if(instruction2[1].indexOf("TAP") != -1)Snowtam_partd[7] += getString(R.string.instrument)+getString(R.string.tap);
+                                        }
+
+                                    }
+                                    if (Snowtam_partc[8] != null)
+                                    {
+                                        String instruction[] = Snowtam_partc[8].split("[/]");
+                                        if(instruction[1].indexOf("L") != -1)
+                                        {
+                                            String instruction2 [] = instruction[1].split("L");
+                                            Snowtam_partd[8] = "J) "+getString(R.string.part_js) + instruction[0]+getString(R.string.cm) + "/ "+instruction2[0]+ getString(R.string.m)+  getString(R.string.left)+  getString(R.string.of)+ getString(R.string.runway);
+                                        }
+                                        else if(instruction[1].indexOf("R") != -1)
+                                        {
+                                            String instruction2 [] = instruction[1].split("R");
+                                            Snowtam_partd[8] = "J) "+getString(R.string.part_js) + instruction[0]+getString(R.string.cm) + "/ "+instruction2[0]+ getString(R.string.m)+  getString(R.string.right)+  getString(R.string.of)+ getString(R.string.runway);
+                                        }
+
+                                    }
+
+                                    if (Snowtam_partc[9] != null)
+                                    {
+                                        String instruction[] = Snowtam_partc[9].split(" ");
+
+                                        if(instruction[2].indexOf("L") != -1)
+                                        {
+                                            if(instruction[2].indexOf("LR") == -1)
+                                            {
+                                                Snowtam_partd[9] = "K) "+ getString(R.string.part_ks)+ instruction[1] + getString(R.string.left)+ getString(R.string.of)+getString(R.string.runway);
+                                            }
+
+                                        }
+                                        if(instruction[2].indexOf("L") != -1)
+                                        {
+                                            if(instruction[2].indexOf("LR") == -1)
+                                            {
+                                                Snowtam_partd[9] = "K) "+ getString(R.string.part_ks)+ instruction[1] +getString(R.string.right)+ getString(R.string.of)+getString(R.string.runway);
+
+                                            }
+
+                                        }
+                                        if(instruction[2].indexOf("LR") != -1)
+                                        {
+                                            Snowtam_partd[9] = "K) " + getString(R.string.part_ks)+ instruction[1] +getString(R.string.left)+getString(R.string.right)+ getString(R.string.of)+getString(R.string.runway);
+                                        }
+
+
+                                    }
+
+                                    if (Snowtam_partc[10] != null) {
+                                        String instruction[] = Snowtam_partc[10].split("/");
+                                        Snowtam_partd[10] = "L) " + getString(R.string.part_ls) + instruction[0] + getString(R.string.m) + "/ " + instruction[1] + getString(R.string.m);
+                                    }
+                                    if (Snowtam_partc[11] != null) {
+                                        Snowtam_partd[11] = "M) " + getString(R.string.part_ms) + Snowtam_partc[11] + getString(R.string.utc);
+                                    }
+                                    if (Snowtam_partc[12] != null) {
+                                        Snowtam_partd[12] = "N) " + Snowtam_partc[12];
+                                    }
+                                    if (Snowtam_partc[13] != null) {
+                                        String instruction [] = Snowtam_partc[13].split("YES");
+                                        Snowtam_partd[13] = "P) " + getString(R.string.yes) + getString(R.string.space) + instruction[1]+getString(R.string.m);
+                                    }
+                                    if (Snowtam_partc[14] != null) {
+                                        Snowtam_partd[14] = "R) " + Snowtam_partc[14];
+                                    }
+                                    if (Snowtam_partc[15] != null) {
+                                        Snowtam_partd[15] = "S) " + Snowtam_partc[15];
+                                    }
+                                    if (Snowtam_partc[16] != null) {
+                                        Snowtam_partd[16] = "T) " + Snowtam_partc[16];
+                                    }
+
+
+
+
+                                    resultat_chaine = "";
+
+                                    for(int i = 0; i < Snowtam_partd.length;i++ )
+                                    {
+                                        if(Snowtam_partd[i] != null)
+                                        {
+                                            resultat_chaine += Snowtam_partd[i] + "\n\n";
+                                        }
+
+                                    }
+
+
+
+
+
                                     arrayList_ground.get(cptfinal).setSnowtam_decoded(resultat_chaine);
 
                                 } catch (JSONException e) {
@@ -683,13 +892,6 @@ public class ActivityResult extends AppCompatActivity {
                             }
                         }
                 );
-
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
                 // Add JsonArrayRequest to the RequestQueue
                 requestQueue.add(jsonArrayRequest);
 
