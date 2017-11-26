@@ -21,17 +21,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -95,8 +85,6 @@ public class ActivityAddGround extends AppCompatActivity {
             }
         }else{
             initialize_listView_empty();
-
-
         }
         listView_ground.setAdapter(dataMyCustomAdapterGround);
 
@@ -117,8 +105,6 @@ public class ActivityAddGround extends AppCompatActivity {
                     finish();
                 }
 
-
-
             }
         });
         fab_add.setOnClickListener(new View.OnClickListener() {
@@ -127,16 +113,6 @@ public class ActivityAddGround extends AppCompatActivity {
                 add_ground();
             }
         });
-
-
-
-
-
-
-
-
-
-
 
     }
     public void initialize_listView_empty(){

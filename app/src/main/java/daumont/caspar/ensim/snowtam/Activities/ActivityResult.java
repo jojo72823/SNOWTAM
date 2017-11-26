@@ -47,10 +47,7 @@ import daumont.caspar.ensim.snowtam.R;
 import daumont.caspar.ensim.snowtam.utils.Methods;
 
 public class ActivityResult extends AppCompatActivity {
-    public String  [] Snowtam_partc = new String [17];
-    public String [] Snowtam_partd = new String [17];
-    public String data = "";
-    public Boolean find_snowtam = false;
+
     /**
      * ATTRIBUTES
      */
@@ -62,16 +59,23 @@ public class ActivityResult extends AppCompatActivity {
     private Toolbar toolbar;
     private CollapsingToolbarLayout toolbar_layout;
     private ProgressDialog mProgressDialog;
-    //ARRAYLIST
+    //ARRAYLIST & TAB
     private ListGround list_ground;
     private ArrayList<Ground> arrayList_ground;
+    public String  [] Snowtam_partc = new String [17];
+    public String [] Snowtam_partd = new String [17];
+
     //OTHER
     private Activity activity;
     private MyCustomAdapterGround dataMyCustomAdapterGround;
-
+    public String data = "";
+    public Boolean find_snowtam = false;
     private int id_position;
-
     private String resultat_chaine;
+
+    /**
+     * Declaration to use bottom menu
+     */
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -95,6 +99,10 @@ public class ActivityResult extends AppCompatActivity {
 
     };
 
+    /**
+     * Create principal activity
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,6 +112,7 @@ public class ActivityResult extends AppCompatActivity {
         listView_ground = (ListView) findViewById(R.id.listView_ground);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar_layout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+        fab_maps = (FloatingActionButton) findViewById(R.id.fab_maps);
 
         //INITIALIZE
         activity = this;
@@ -116,6 +125,8 @@ public class ActivityResult extends AppCompatActivity {
         mProgressDialog.setIndeterminate(false);
         id_position = 0;
 
+
+        //GET params of activity
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             if (extras.getString("listGround") != null) {
@@ -123,13 +134,11 @@ public class ActivityResult extends AppCompatActivity {
                 arrayList_ground = list_ground.getListGround();
             }
         }
+
         dataMyCustomAdapterGround = new MyCustomAdapterGround(activity, R.layout.list_layout_ground, arrayList_ground);
         listView_ground.setAdapter(dataMyCustomAdapterGround);
 
-
         //LISTENERS
-        fab_maps = (FloatingActionButton) findViewById(R.id.fab_maps);
-
         fab_maps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -141,16 +150,23 @@ public class ActivityResult extends AppCompatActivity {
             }
         });
 
+        //Call of thread load result to get data & result of traitment
         new Loading().execute();
 
     }
 
+    /**
+     * Detect press of return button
+     */
     @Override
     public void onBackPressed() {
-        retour();
+        return_activity();
     }
 
-    public void retour() {
+    /**
+     * Function to change activity
+     */
+    public void return_activity() {
         if (Methods.internet_diponible(activity)) {
             Intent intent = new Intent(activity, ActivityAddGround.class);
             intent.putExtra("listGround", new Gson().toJson(list_ground));
@@ -161,18 +177,17 @@ public class ActivityResult extends AppCompatActivity {
 
     }
 
+    /**
+     * Generator elements of listView
+     */
     private class MyCustomAdapterGround extends ArrayAdapter<Ground> {
 
         private ArrayList<Ground> groupeList;
-
-
         public MyCustomAdapterGround(Context context, int textViewResourceId,
                                      ArrayList<Ground> groupeList) {
             super(context, textViewResourceId, groupeList);
             this.groupeList = new ArrayList<>();
             this.groupeList.addAll(groupeList);
-
-
         }
 
         @Override
@@ -189,25 +204,19 @@ public class ActivityResult extends AppCompatActivity {
                 holder = new MyCustomAdapterGround.ViewHolder();
                 holder.textView_name_ground = (TextView) convertViewProduit.findViewById(R.id.textView_name_ground);
                 holder.imageView = (ImageView) convertViewProduit.findViewById(R.id.imageView);
-                //INITIALIZE
-                convertViewProduit.setTag(holder);
-
-
                 holder.imageView.setImageResource(R.drawable.icon_plane);
 
-
+                //INITIALIZE
+                convertViewProduit.setTag(holder);
                 holder.textView_name_ground.setText(groupeList.get(position).getName());
-
 
             } else {
                 holder = (MyCustomAdapterGround.ViewHolder) convertViewProduit.getTag();
             }
 
-            //INITIALIZE
+            //SECOND INITIALIZE
             holder.textView_name_ground.setText(groupeList.get(position).getName());
-
             holder.imageView.setImageResource(R.drawable.icon_plane);
-
 
             //LISTENER
             convertViewProduit.setOnClickListener(new View.OnClickListener() {
@@ -230,7 +239,6 @@ public class ActivityResult extends AppCompatActivity {
                     adb.setView(alertDialogView);
                     final AlertDialog alertDialog = adb.show();
 
-
                     //LISTENER
                     button_close.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -249,12 +257,12 @@ public class ActivityResult extends AppCompatActivity {
         private class ViewHolder {
             TextView textView_name_ground;
             ImageView imageView;
-
         }
-
-
     }
 
+    /**
+     * Synchronization of traitment
+     */
     private class Loading extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {
@@ -277,9 +285,6 @@ public class ActivityResult extends AppCompatActivity {
                         new Response.Listener<JSONArray>() {
                             @Override
                             public void onResponse(JSONArray response) {
-                                // Do something with response
-                                //mTextView.setText(response.toString());
-
                                 // Process the JSON
                                 try {
                                     // Loop through the array elements
@@ -290,7 +295,6 @@ public class ActivityResult extends AppCompatActivity {
                                         if (find_snowtam == false) data = detail.getString("all");
                                         //TRAITEMENT
                                         if (data.indexOf("SNOWTAM ") != -1 && find_snowtam == false) {
-                                            //Toast.makeText(activity, "data = " + data, Toast.LENGTH_SHORT).show();
                                             find_snowtam = true;
 
 
@@ -298,7 +302,6 @@ public class ActivityResult extends AppCompatActivity {
                                                 String raw[] = data.split("A[)]");
                                                 String part_atab[] = raw[1].split("[\n]");
                                                 Snowtam_partc[0] = part_atab[0];
-                                                //Toast.makeText(activity, "A = " + part_a, Toast.LENGTH_SHORT).show();
                                             }
                                             if (data.indexOf("B) ") != -1) {
                                                 String raw[] = data.split("B[)]");
@@ -306,10 +309,8 @@ public class ActivityResult extends AppCompatActivity {
                                                 if (part_tab[1].indexOf("\n") != -1) {
                                                     String part_tab2[] = part_tab[1].split("[\n]");
                                                     Snowtam_partc[1] = part_tab2[0];
-                                                    //Toast.makeText(activity, "B = " + part_b, Toast.LENGTH_SHORT).show();
                                                 } else {
                                                     Snowtam_partc[1] = part_tab[1];
-                                                    //Toast.makeText(activity, "B = " + part_b, Toast.LENGTH_SHORT).show();
                                                 }
 
                                             }
@@ -319,10 +320,8 @@ public class ActivityResult extends AppCompatActivity {
                                                 if (part_tab[1].indexOf("\n") != -1) {
                                                     String part_tab2[] = part_tab[1].split("[\n]");
                                                     Snowtam_partc[2] = part_tab2[0];
-                                                    //Toast.makeText(activity, "C = " + part_b, Toast.LENGTH_SHORT).show();
                                                 } else {
                                                     Snowtam_partc[2] = part_tab[1];
-                                                    //Toast.makeText(activity, "C = " + part_c, Toast.LENGTH_SHORT).show();
                                                 }
 
                                             }
@@ -332,10 +331,8 @@ public class ActivityResult extends AppCompatActivity {
                                                 if (part_tab[1].indexOf("\n") != -1) {
                                                     String part_tab2[] = part_tab[1].split("[\n]");
                                                     Snowtam_partc[3] = part_tab2[0];
-                                                    //Toast.makeText(activity, "D = " + part_d, Toast.LENGTH_SHORT).show();
                                                 } else {
                                                     Snowtam_partc[3] = part_tab[1];
-                                                    //Toast.makeText(activity, "D = " + part_d, Toast.LENGTH_SHORT).show();
                                                 }
 
                                             }
@@ -345,10 +342,8 @@ public class ActivityResult extends AppCompatActivity {
                                                 if (part_tab[1].indexOf("\n") != -1) {
                                                     String part_tab2[] = part_tab[1].split("[\n]");
                                                     Snowtam_partc[4] = part_tab2[0];
-                                                    //Toast.makeText(activity, "E = " + part_e, Toast.LENGTH_SHORT).show();
                                                 } else {
                                                     Snowtam_partc[4] = part_tab[1];
-                                                    //Toast.makeText(activity, "E = " + part_e, Toast.LENGTH_SHORT).show();
                                                 }
 
                                             }
@@ -358,10 +353,8 @@ public class ActivityResult extends AppCompatActivity {
                                                 if (part_tab[1].indexOf("\n") != -1) {
                                                     String part_tab2[] = part_tab[1].split("[\n]");
                                                     Snowtam_partc[5] = part_tab2[0];
-                                                    //Toast.makeText(activity, "F = " + part_f, Toast.LENGTH_SHORT).show();
                                                 } else {
                                                     Snowtam_partc[5] = part_tab[1];
-                                                    //Toast.makeText(activity, "F = " + part_f, Toast.LENGTH_SHORT).show();
                                                 }
 
                                             }
@@ -371,10 +364,8 @@ public class ActivityResult extends AppCompatActivity {
                                                 if (part_tab[1].indexOf("\n") != -1) {
                                                     String part_tab2[] = part_tab[1].split("[\n]");
                                                     Snowtam_partc[6] = part_tab2[0];
-                                                    //Toast.makeText(activity, "G = " + part_g, Toast.LENGTH_SHORT).show();
                                                 } else {
                                                     Snowtam_partc[6] = part_tab[1];
-                                                    //Toast.makeText(activity, "G = " + part_g, Toast.LENGTH_SHORT).show();
                                                 }
 
                                             }
@@ -384,10 +375,8 @@ public class ActivityResult extends AppCompatActivity {
                                                 if (part_tab[1].indexOf("\n") != -1) {
                                                     String part_tab2[] = part_tab[1].split("[\n]");
                                                     Snowtam_partc[7] = part_tab2[0];
-                                                    //Toast.makeText(activity, "H = " + part_h, Toast.LENGTH_SHORT).show();
                                                 } else {
                                                     Snowtam_partc[7] = part_tab[1];
-                                                    //Toast.makeText(activity, "H = " + part_h, Toast.LENGTH_SHORT).show();
                                                 }
 
                                             }
@@ -397,10 +386,8 @@ public class ActivityResult extends AppCompatActivity {
                                                 if (part_tab[1].indexOf("\n") != -1) {
                                                     String part_tab2[] = part_tab[1].split("[\n]");
                                                     Snowtam_partc[8] = part_tab2[0];
-                                                    //Toast.makeText(activity, "J = " + part_j, Toast.LENGTH_SHORT).show();
                                                 } else {
                                                     Snowtam_partc[8] = part_tab[1];
-                                                    //Toast.makeText(activity, "J = " + part_j, Toast.LENGTH_SHORT).show();
                                                 }
 
                                             }
@@ -410,10 +397,8 @@ public class ActivityResult extends AppCompatActivity {
                                                 if (part_tab[1].indexOf("\n") != -1) {
                                                     String part_tab2[] = part_tab[1].split("[\n]");
                                                     Snowtam_partc[9] = part_tab2[0];
-                                                    //Toast.makeText(activity, "K = " + part_k, Toast.LENGTH_SHORT).show();
                                                 } else {
                                                     Snowtam_partc[9] = part_tab[1];
-                                                    //Toast.makeText(activity, "K = " + part_k, Toast.LENGTH_SHORT).show();
                                                 }
 
                                             }
@@ -423,10 +408,8 @@ public class ActivityResult extends AppCompatActivity {
                                                 if (part_tab[1].indexOf("\n") != -1) {
                                                     String part_tab2[] = part_tab[1].split("[\n]");
                                                     Snowtam_partc[10] = part_tab2[0];
-                                                    //Toast.makeText(activity, "L = " + part_l, Toast.LENGTH_SHORT).show();
                                                 } else {
                                                     Snowtam_partc[10] = part_tab[1];
-                                                    //Toast.makeText(activity, "L = " + part_l, Toast.LENGTH_SHORT).show();
                                                 }
 
                                             }
@@ -436,10 +419,8 @@ public class ActivityResult extends AppCompatActivity {
                                                 if (part_tab[1].indexOf("\n") != -1) {
                                                     String part_tab2[] = part_tab[1].split("[\n]");
                                                     Snowtam_partc[11] = part_tab2[0];
-                                                    //Toast.makeText(activity, "M = " + part_m, Toast.LENGTH_SHORT).show();
                                                 } else {
                                                     Snowtam_partc[11] = part_tab[1];
-                                                    //Toast.makeText(activity, "M = " + part_m, Toast.LENGTH_SHORT).show();
                                                 }
 
                                             }
@@ -448,7 +429,6 @@ public class ActivityResult extends AppCompatActivity {
                                                 String part_tab[] = raw[1].split("[\n]");
 
                                                 Snowtam_partc[12] = part_tab[0];
-                                                //Toast.makeText(activity, "N = " + part_n, Toast.LENGTH_SHORT).show();
 
                                             }
                                             if (data.indexOf("P) ") != -1) {
@@ -456,16 +436,12 @@ public class ActivityResult extends AppCompatActivity {
                                                 String part_tab[] = raw[1].split("[\n]");
 
                                                 Snowtam_partc[13] = part_tab[0];
-                                                //Toast.makeText(activity, "P = " + part_p, Toast.LENGTH_SHORT).show();
 
                                             }
                                             if (data.indexOf("R) ") != -1) {
                                                 String raw[] = data.split("R[)]");
                                                 String part_tab[] = raw[1].split("[\n]");
-
                                                 Snowtam_partc[14] = part_tab[0];
-                                                //Toast.makeText(activity, "R = " + part_r, Toast.LENGTH_SHORT).show();
-
                                             }
                                             if (data.indexOf("S) ") != -1) {
                                                 String raw[] = data.split("S[)]");
@@ -473,12 +449,9 @@ public class ActivityResult extends AppCompatActivity {
                                                 if (part_tab[1].indexOf("\n") != -1) {
                                                     String part_tab2[] = part_tab[1].split("[\n]");
                                                     Snowtam_partc[15] = part_tab2[0];
-                                                    //Toast.makeText(activity, "S = " + part_s, Toast.LENGTH_SHORT).show();
                                                 } else {
                                                     Snowtam_partc[15] = part_tab[1];
-                                                    //Toast.makeText(activity, "S = " + part_s, Toast.LENGTH_SHORT).show();
                                                 }
-
                                             }
                                             if (data.indexOf("T) ") != -1) {
                                                 String raw[] = data.split("T[)]");
@@ -486,21 +459,13 @@ public class ActivityResult extends AppCompatActivity {
                                                 if (part_tab[1].indexOf("\n") != -1) {
                                                     String part_tab2[] = part_tab[1].split("[\n]");
                                                     Snowtam_partc[16] = part_tab2[0];
-                                                    //Toast.makeText(activity, "T = " + part_t, Toast.LENGTH_SHORT).show();
                                                 } else {
                                                     Snowtam_partc[16] = part_tab[1];
-                                                    //Toast.makeText(activity, "T = " + part_t, Toast.LENGTH_SHORT).show();
                                                 }
-
                                             }
-
                                         }
-
                                     }
-
-                                    //TODO
                                     arrayList_ground.get(cptfinal).setSnowtam_raw(data);
-
                                     find_snowtam = false;
 
                                     if (Snowtam_partc[1] != null) {
@@ -678,8 +643,6 @@ public class ActivityResult extends AppCompatActivity {
                         new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                                // Do something when error occurred
-
                             }
                         }
                 );
@@ -703,8 +666,6 @@ public class ActivityResult extends AppCompatActivity {
                         new Response.Listener<JSONArray>() {
                             @Override
                             public void onResponse(JSONArray response) {
-                                // Do something with response
-                                //mTextView.setText(response.toString());
 
                                 // Process the JSON
                                 try {
@@ -757,11 +718,6 @@ public class ActivityResult extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void result) {
             mProgressDialog.hide();
-
-
         }
-
     }
-
-
 }

@@ -1,27 +1,13 @@
 package daumont.caspar.ensim.snowtam.Activities;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.AsyncTask;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -30,14 +16,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-
-import daumont.caspar.ensim.snowtam.Model.Ground;
 import daumont.caspar.ensim.snowtam.Model.ListGround;
 import daumont.caspar.ensim.snowtam.R;
 import daumont.caspar.ensim.snowtam.utils.Methods;
@@ -79,8 +57,6 @@ public class ActivityMaps extends FragmentActivity implements GoogleMap.OnInfoWi
         mProgressDialog.setMessage(getString(R.string.loading_subtitle));
         mProgressDialog.setCancelable(false);
         mProgressDialog.setIndeterminate(false);
-
-
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -157,15 +133,10 @@ public class ActivityMaps extends FragmentActivity implements GoogleMap.OnInfoWi
                 // Getting view from the layout file info_window_layout
                 View v = getLayoutInflater().inflate(R.layout.dialog_marker, null);
 
-
                 TextView textView_content = (TextView)v.findViewById(R.id.textView_content);
-
 
                 //INITIALIZE
                 textView_content.setText(list_ground.getListGround().get(0).getSnowtam_raw());
-
-
-
 
                 return v;
 
@@ -186,13 +157,7 @@ public class ActivityMaps extends FragmentActivity implements GoogleMap.OnInfoWi
             overridePendingTransition(R.anim.pull_in_return, R.anim.push_out_return);
             finish();
         }
-
-
-
     }
-
-
-
     @Override
     public void onInfoWindowClick(Marker marker) {
 

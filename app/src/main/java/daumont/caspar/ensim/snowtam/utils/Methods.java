@@ -89,18 +89,6 @@ public class Methods {
         builder.show();
     }
 
-    public static Address getLatLngAddress(Activity activity,String locationName){
-        Geocoder gc = new Geocoder(activity);
-        List<Address> list;
-        Address address=null;
-        try{
-            list = gc.getFromLocationName(locationName, 1);
-           address = list.get(0);
-        }catch(IOException e){
-                Log.d("Error","getLatLngAddress : "+e);
-        }
-        return address;
-    }
 
 
 

@@ -14,17 +14,10 @@ public class ListGround {
         this.listGround = new ArrayList<>();
     }
 
-    public void add_ground(Ground ground){
-        this.listGround.add(ground);
-    }
-
-    public void delete_ground(int position){
-        this.listGround.remove(position);
-    }
-
     public void addListGround(ArrayList<Ground> listGround){
         this.listGround = listGround;
     }
+
     public ArrayList<Ground> getListGround(){
         return this.listGround;
     }
