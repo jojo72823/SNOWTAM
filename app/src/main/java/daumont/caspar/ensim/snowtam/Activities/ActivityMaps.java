@@ -25,7 +25,6 @@ public class ActivityMaps extends FragmentActivity implements GoogleMap.OnInfoWi
     private GoogleMap mMap;
     private Activity activity;
     private Button button_next,button_back;
-
     private ListGround list_ground;
     private ProgressDialog mProgressDialog;
     private int id_marker;
