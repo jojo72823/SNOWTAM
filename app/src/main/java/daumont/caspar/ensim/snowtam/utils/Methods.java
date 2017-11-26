@@ -5,17 +5,11 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.location.Address;
-import android.location.Geocoder;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.util.Log;
-import android.widget.Toast;
-
-import java.io.IOException;
-import java.util.List;
 
 import daumont.caspar.ensim.snowtam.Activities.ActivityStart;
+import daumont.caspar.ensim.snowtam.R;
 
 /**
  * Created by Jonathan Daumont on 09/06/2017.
@@ -52,7 +46,7 @@ public class Methods {
 
     }
 
-    public static boolean internet_diponible_activity_start(Activity activity)
+    public static boolean internet_available_activity_start(Activity activity)
     {
         ConnectivityManager connectivityManager = (ConnectivityManager)activity.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
@@ -80,7 +74,7 @@ public class Methods {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setCancelable(false);
         builder.setMessage(message)
-                .setPositiveButton("Fermer", new DialogInterface.OnClickListener() {
+                .setPositiveButton(activity.getString(R.string.close), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.dismiss();
                     }

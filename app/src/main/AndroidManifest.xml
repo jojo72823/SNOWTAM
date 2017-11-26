@@ -29,7 +29,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activities.ActivityAddGround"
+            android:name=".Activities.ActivityAddAirport"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activities.ActivityResult"

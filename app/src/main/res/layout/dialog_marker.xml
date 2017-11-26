@@ -14,6 +14,18 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/textView_name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:foregroundGravity="center_vertical|center_horizontal"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+
+            <TextView
                 android:id="@+id/textView_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

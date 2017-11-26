@@ -15,7 +15,11 @@
     <string name="list_empty">Aucun aéroport</string>
     <string name="loading">Veuillez patienter</string>
     <string name="loading_subtitle">Chargement</string>
-
+    <string name="loading_crypt">Crypté</string>
+    <string name="loading_decrypt">Décrypté</string>
+    <string name="loading_maps">Voir sur la carte</string>
+    <string name="pb_internet">L\'application a besoin d\'internet pour fonctionner.\nVeuillez l\'activer.</string>
+    <string name="close">Fermer</string>
     <string name="m">M </string>
     <string name="mm">mm </string>
     <string name="cm">cm </string>

@@ -8,7 +8,7 @@ import com.google.android.gms.maps.model.LatLng;
  * Created by jojo- on 14/11/2017.
  */
 
-public class Ground {
+public class Airport {
 
     //ATTRIBUTS
     private String name;
@@ -18,7 +18,7 @@ public class Ground {
     private LatLng latLng;
 
     //CONSTRUCTOR
-    public Ground(String name){
+    public Airport(String name){
         this.name = name;
     }
 

@@ -3,12 +3,17 @@
 
     <item
         android:id="@+id/navigation_decrypt"
-        android:icon="@drawable/icon_plane"
-        android:title="Decrypt" />
+        android:icon="@drawable/icon_decrypt"
+        android:title="@string/loading_decrypt" />
 
     <item
         android:id="@+id/navigation_crypt"
-        android:icon="@drawable/icon_menu"
-        android:title="Crypt" />
+        android:icon="@drawable/icon_crypt"
+        android:title="@string/loading_crypt" />
+
+    <item
+        android:id="@+id/navigation_maps"
+        android:icon="@drawable/icon_maps"
+        android:title="@string/loading_maps" />
 
 </menu>

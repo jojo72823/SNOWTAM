@@ -41,8 +41,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import daumont.caspar.ensim.snowtam.Model.Ground;
-import daumont.caspar.ensim.snowtam.Model.ListGround;
+import daumont.caspar.ensim.snowtam.Model.Airport;
+import daumont.caspar.ensim.snowtam.Model.ListAirport;
 import daumont.caspar.ensim.snowtam.R;
 import daumont.caspar.ensim.snowtam.utils.Methods;
 
@@ -60,8 +60,8 @@ public class ActivityResult extends AppCompatActivity {
     private CollapsingToolbarLayout toolbar_layout;
     private ProgressDialog mProgressDialog;
     //ARRAYLIST & TAB
-    private ListGround list_ground;
-    private ArrayList<Ground> arrayList_ground;
+    private ListAirport list_airport;
+    private ArrayList<Airport> arrayList_airport;
     public String  [] Snowtam_partc = new String [17];
     public String [] Snowtam_partd = new String [17];
 
@@ -84,13 +84,22 @@ public class ActivityResult extends AppCompatActivity {
             if (Methods.internet_diponible(activity)) {
                 switch (item.getItemId()) {
                     case R.id.navigation_crypt:
-                        textView_content.setText(arrayList_ground.get(id_position).getSnowtam_raw());
+                        textView_content.setText(arrayList_airport.get(id_position).getSnowtam_raw());
 
                         return true;
                     case R.id.navigation_decrypt:
-                        textView_content.setText(arrayList_ground.get(id_position).getSnowtam_decoded());
+                        textView_content.setText(arrayList_airport.get(id_position).getSnowtam_decoded());
                         return true;
 
+                    case R.id.navigation_maps:
+                        Intent intent = new Intent(activity, ActivityMaps.class);
+                        intent.putExtra("listAirport", new Gson().toJson(list_airport));
+                        intent.putExtra("airport", new Gson().toJson(list_airport.getListAirport().get(id_position)));
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.pull_in, R.anim.push_out);
+                        finish();
+
+                        return true;
                 }
             }
 
@@ -129,13 +138,13 @@ public class ActivityResult extends AppCompatActivity {
         //GET params of activity
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            if (extras.getString("listGround") != null) {
-                list_ground = new Gson().fromJson(extras.getString("listGround"), ListGround.class);
-                arrayList_ground = list_ground.getListGround();
+            if (extras.getString("listAirport") != null) {
+                list_airport = new Gson().fromJson(extras.getString("listAirport"), ListAirport.class);
+                arrayList_airport = list_airport.getListAirport();
             }
         }
 
-        dataMyCustomAdapterGround = new MyCustomAdapterGround(activity, R.layout.list_layout_ground, arrayList_ground);
+        dataMyCustomAdapterGround = new MyCustomAdapterGround(activity, R.layout.list_layout_ground, arrayList_airport);
         listView_ground.setAdapter(dataMyCustomAdapterGround);
 
         //LISTENERS
@@ -143,7 +152,7 @@ public class ActivityResult extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(activity, ActivityMaps.class);
-                intent.putExtra("listGround", new Gson().toJson(list_ground));
+                intent.putExtra("listAirport", new Gson().toJson(list_airport));
                 startActivity(intent);
                 overridePendingTransition(R.anim.pull_in, R.anim.push_out);
                 finish();
@@ -168,8 +177,8 @@ public class ActivityResult extends AppCompatActivity {
      */
     public void return_activity() {
         if (Methods.internet_diponible(activity)) {
-            Intent intent = new Intent(activity, ActivityAddGround.class);
-            intent.putExtra("listGround", new Gson().toJson(list_ground));
+            Intent intent = new Intent(activity, ActivityAddAirport.class);
+            intent.putExtra("listAirport", new Gson().toJson(list_airport));
             startActivity(intent);
             overridePendingTransition(R.anim.pull_in_return, R.anim.push_out_return);
             finish();
@@ -180,11 +189,11 @@ public class ActivityResult extends AppCompatActivity {
     /**
      * Generator elements of listView
      */
-    private class MyCustomAdapterGround extends ArrayAdapter<Ground> {
+    private class MyCustomAdapterGround extends ArrayAdapter<Airport> {
 
-        private ArrayList<Ground> groupeList;
+        private ArrayList<Airport> groupeList;
         public MyCustomAdapterGround(Context context, int textViewResourceId,
-                                     ArrayList<Ground> groupeList) {
+                                     ArrayList<Airport> groupeList) {
             super(context, textViewResourceId, groupeList);
             this.groupeList = new ArrayList<>();
             this.groupeList.addAll(groupeList);
@@ -194,6 +203,7 @@ public class ActivityResult extends AppCompatActivity {
         public View getView(final int position, View convertViewProduit, ViewGroup parent) {
 
             MyCustomAdapterGround.ViewHolder holder;
+
 
             if (convertViewProduit == null) {
                 LayoutInflater vi = (LayoutInflater) getSystemService(
@@ -235,7 +245,7 @@ public class ActivityResult extends AppCompatActivity {
                     navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
                     //INITIALIZE
-                    textView_content.setText(arrayList_ground.get(id_position).getSnowtam_decoded());
+                    textView_content.setText(arrayList_airport.get(id_position).getSnowtam_decoded());
                     adb.setView(alertDialogView);
                     final AlertDialog alertDialog = adb.show();
 
@@ -272,11 +282,11 @@ public class ActivityResult extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... params) {
-            for (int cpt = 0; cpt < arrayList_ground.size(); cpt++) {
+            for (int cpt = 0; cpt < arrayList_airport.size(); cpt++) {
                 final int cptfinal = cpt;
                 // Initialize a new RequestQueue instance
                 RequestQueue requestQueue = Volley.newRequestQueue(activity);
-                String url = "https://v4p4sz5ijk.execute-api.us-east-1.amazonaws.com/anbdata/states/notams/notams-list?api_key=72b1ee30-cdce-11e7-8f50-f15f214edab3&format=json&type=&Qcode=&locations=" + arrayList_ground.get(cpt).getName() + "&qstring=&states=&ICAOonly=false";
+                String url = "https://v4p4sz5ijk.execute-api.us-east-1.amazonaws.com/anbdata/states/notams/notams-list?api_key=72b1ee30-cdce-11e7-8f50-f15f214edab3&format=json&type=&Qcode=&locations=" + arrayList_airport.get(cpt).getName() + "&qstring=&states=&ICAOonly=false";
                 // Initialize a new JsonArrayRequest instance
                 JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
                         Request.Method.GET,
@@ -463,7 +473,7 @@ public class ActivityResult extends AppCompatActivity {
                                             }
                                         }
                                     }
-                                    arrayList_ground.get(cptfinal).setSnowtam_raw(data);
+                                    arrayList_airport.get(cptfinal).setSnowtam_raw(data);
                                     find_snowtam = false;
 
                                     if (Snowtam_partc[1] != null) {
@@ -846,7 +856,7 @@ public class ActivityResult extends AppCompatActivity {
 
 
 
-                                    arrayList_ground.get(cptfinal).setSnowtam_decoded(resultat_chaine);
+                                    arrayList_airport.get(cptfinal).setSnowtam_decoded(resultat_chaine);
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -865,7 +875,7 @@ public class ActivityResult extends AppCompatActivity {
                 requestQueue.add(jsonArrayRequest);
 
                 RequestQueue requestQueue2 = Volley.newRequestQueue(activity);
-                String url2 = "https://v4p4sz5ijk.execute-api.us-east-1.amazonaws.com/anbdata/airports/locations/doc7910?api_key=72b1ee30-cdce-11e7-8f50-f15f214edab3&airports=" + arrayList_ground.get(cpt).getName() + "&format=json";
+                String url2 = "https://v4p4sz5ijk.execute-api.us-east-1.amazonaws.com/anbdata/airports/locations/doc7910?api_key=72b1ee30-cdce-11e7-8f50-f15f214edab3&airports=" + arrayList_airport.get(cpt).getName() + "&format=json";
                 // Initialize a new JsonArrayRequest instance
                 JsonArrayRequest jsonArrayRequest2 = new JsonArrayRequest(
                         Request.Method.GET,
@@ -888,11 +898,11 @@ public class ActivityResult extends AppCompatActivity {
                                         String longitude = detail.getString("Longitude");
                                         String latitude = detail.getString("Latitude");
 
-                                        arrayList_ground.get(cptfinal).setLatLng(new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude)));
-                                        String resultbegin =  arrayList_ground.get(cptfinal).getSnowtam_decoded();
+                                        arrayList_airport.get(cptfinal).setLatLng(new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude)));
+                                        String resultbegin =  arrayList_airport.get(cptfinal).getSnowtam_decoded();
                                         Snowtam_partd[0] = "A) " +data;
                                         String deco = Snowtam_partd[0]+"\n"+resultbegin;
-                                        arrayList_ground.get(cptfinal).setSnowtam_decoded(deco);
+                                        arrayList_airport.get(cptfinal).setSnowtam_decoded(deco);
                                         //Toast.makeText(activity, "A = " + part_ad, Toast.LENGTH_SHORT).show();
 
 

@@ -19,19 +19,18 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
-import daumont.caspar.ensim.snowtam.Model.Ground;
-import daumont.caspar.ensim.snowtam.Model.ListGround;
+import daumont.caspar.ensim.snowtam.Model.Airport;
+import daumont.caspar.ensim.snowtam.Model.ListAirport;
 import daumont.caspar.ensim.snowtam.R;
 import daumont.caspar.ensim.snowtam.utils.Methods;
 
 
-public class ActivityAddGround extends AppCompatActivity {
+public class ActivityAddAirport extends AppCompatActivity {
 
 
     /**
@@ -39,18 +38,18 @@ public class ActivityAddGround extends AppCompatActivity {
      */
     //INTERFACE
     private FloatingActionButton fab_result, fab_add;
-    private EditText editText_ground_name;
-    private MyCustomAdapterGround dataMyCustomAdapterGround;
-    private ListView listView_ground;
+    private MyCustomAdapterAirport dataMyCustomAdapterAirport;
+    private ListView listView_airport;
     private Toolbar toolbar;
     private CollapsingToolbarLayout toolbar_layout;
     //ARRAYLIST
-    private ArrayList<Ground> arraylist_list_ground;
+    private ArrayList<Airport> arraylist_list_airport;
 
     //OTHER
     private Activity activity;
     private Boolean list_empty = false;
-    private ListGround listGround;
+    private ListAirport listAirport;
+
 
 
     /**
@@ -65,28 +64,28 @@ public class ActivityAddGround extends AppCompatActivity {
         setContentView(R.layout.activity_add_ground);
         fab_result = (FloatingActionButton) findViewById(R.id.fab_result);
         fab_add = (FloatingActionButton) findViewById(R.id.fab_add);
-        listView_ground = (ListView) findViewById(R.id.listView_ground);
+        listView_airport = (ListView) findViewById(R.id.listView_ground);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar_layout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
 
         //INITIALIZE
         activity = this;
-        arraylist_list_ground = new ArrayList<>();
-        listGround = new ListGround();
+        arraylist_list_airport = new ArrayList<>();
+        listAirport = new ListAirport();
         setSupportActionBar(toolbar);
         toolbar_layout.setTitle(getString(R.string.activityAddGround));
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            if (extras.getString("listGround") != null) {
-                listGround = new Gson().fromJson(extras.getString("listGround"), ListGround.class);
-                arraylist_list_ground = listGround.getListGround();
-                dataMyCustomAdapterGround = new MyCustomAdapterGround(activity, R.layout.list_layout_ground, arraylist_list_ground);
+            if (extras.getString("listAirport") != null) {
+                listAirport = new Gson().fromJson(extras.getString("listAirport"), ListAirport.class);
+                arraylist_list_airport = listAirport.getListAirport();
+                dataMyCustomAdapterAirport = new MyCustomAdapterAirport(activity, R.layout.list_layout_ground, arraylist_list_airport);
             }
         }else{
             initialize_listView_empty();
         }
-        listView_ground.setAdapter(dataMyCustomAdapterGround);
+        listView_airport.setAdapter(dataMyCustomAdapterAirport);
 
 
         //LISTENERS
@@ -94,12 +93,12 @@ public class ActivityAddGround extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if(arraylist_list_ground.size()==0){
+                if(arraylist_list_airport.size()==0){
                     Methods.info_dialog(getString(R.string.list_empty),activity);
                 }else{
-                    listGround.addListGround(arraylist_list_ground);
+                    listAirport.addListGround(arraylist_list_airport);
                     Intent intent = new Intent(activity, ActivityResult.class);
-                    intent.putExtra("listGround", new Gson().toJson(listGround));
+                    intent.putExtra("listAirport", new Gson().toJson(listAirport));
                     startActivity(intent);
                     overridePendingTransition(R.anim.pull_in, R.anim.push_out);
                     finish();
@@ -116,20 +115,20 @@ public class ActivityAddGround extends AppCompatActivity {
 
     }
     public void initialize_listView_empty(){
-        ArrayList<Ground> list_tmp = new ArrayList<>();
-        list_tmp.add(new Ground(getString(R.string.add_ground)));
+        ArrayList<Airport> list_tmp = new ArrayList<>();
+        list_tmp.add(new Airport(getString(R.string.add_ground)));
         list_empty = true;
-        dataMyCustomAdapterGround = new MyCustomAdapterGround(activity, R.layout.list_layout_ground, list_tmp);
-        listView_ground.setAdapter(dataMyCustomAdapterGround);
+        dataMyCustomAdapterAirport = new MyCustomAdapterAirport(activity, R.layout.list_layout_ground, list_tmp);
+        listView_airport.setAdapter(dataMyCustomAdapterAirport);
     }
 
     private void udpate_listView() {
-        if (dataMyCustomAdapterGround != null) {
-            listView_ground.setAdapter(null);
+        if (dataMyCustomAdapterAirport != null) {
+            listView_airport.setAdapter(null);
         }
 
-        dataMyCustomAdapterGround = new MyCustomAdapterGround(activity, R.layout.list_layout_ground, arraylist_list_ground);
-        listView_ground.setAdapter(dataMyCustomAdapterGround);
+        dataMyCustomAdapterAirport = new MyCustomAdapterAirport(activity, R.layout.list_layout_ground, arraylist_list_airport);
+        listView_airport.setAdapter(dataMyCustomAdapterAirport);
     }
 
     public void add_ground() {
@@ -156,7 +155,7 @@ public class ActivityAddGround extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                arraylist_list_ground.add(new Ground(editText_ground_name.getText().toString()));
+                arraylist_list_airport.add(new Airport(editText_ground_name.getText().toString()));
 
                 udpate_listView();
                 list_empty = false;
@@ -194,13 +193,13 @@ public class ActivityAddGround extends AppCompatActivity {
     }
 
 
-    private class MyCustomAdapterGround extends ArrayAdapter<Ground> {
+    private class MyCustomAdapterAirport extends ArrayAdapter<Airport> {
 
-        private ArrayList<Ground> groupeList;
+        private ArrayList<Airport> groupeList;
 
 
-        public MyCustomAdapterGround(Context context, int textViewResourceId,
-                                     ArrayList<Ground> groupeList) {
+        public MyCustomAdapterAirport(Context context, int textViewResourceId,
+                                      ArrayList<Airport> groupeList) {
             super(context, textViewResourceId, groupeList);
             this.groupeList = new ArrayList<>();
             this.groupeList.addAll(groupeList);
@@ -260,15 +259,12 @@ public class ActivityAddGround extends AppCompatActivity {
                         builder.setMessage("Voulez-vous suppprimer " + groupeList.get(position).getName())
                                 .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
-                                        arraylist_list_ground.remove(position);
+                                        arraylist_list_airport.remove(position);
                                         udpate_listView();
                                         dialog.cancel();
-                                        if(arraylist_list_ground.size() == 0){
+                                        if(arraylist_list_airport.size() == 0){
                                             initialize_listView_empty();
-                                            Toast.makeText(activity, "size = " + arraylist_list_ground.size(), Toast.LENGTH_SHORT).show();
                                         }
-
-
                                     }
                                 })
                                 .setNegativeButton("Non", new DialogInterface.OnClickListener() {
