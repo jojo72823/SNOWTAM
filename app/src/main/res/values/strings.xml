@@ -16,21 +16,25 @@
     <string name="loading">Please wait</string>
     <string name="loading_subtitle">Loading</string>
 
-    <string name="m">M</string>
-    <string name="mm">mm</string>
+    <string name="m">M </string>
+    <string name="mm">mm </string>
+    <string name="cm">cm </string>
+    <string name="right">RIGHT </string>
+    <string name="left">LEFT </string>
+    <string name="nil">NIL </string>
+
 
     <string name="threshold"> Threshold: </string>
     <string name="mid_runway">/ Mid runway: </string>
     <string name="roll_out">/ Roll out: </string>
-    <string name="instrument"> Instrument: </string>
+    <string name="instrument">Instrument: </string>
 
-    <string name="part_cs">RUNWAY</string>
+    <string name="runway">RUNWAY </string>
+    <string name="of">of </string>
 
     <string name="part_ds">CLEARED RUNWAY LENGTH </string>
 
     <string name="part_es">CLEARED RUNWAY WIDTH </string>
-    <string name="part_esr">M RIGHT</string>
-    <string name="part_esl">M RIGHT</string>
 
     <string name="part_fs0">CLEAR AND DRY </string>
     <string name="part_fs1">DAMP </string>
@@ -42,6 +46,28 @@
     <string name="part_fs7">ICE </string>
     <string name="part_fs8">COMPACTED </string>
     <string name="part_fs9">FROZEN RUTS </string>
+    <string name ="part_js">CRITICAL SNOW BANK </string>
+    <string name="part_ks">Lights obscured: </string>
+    <string name="part_ls">FURTHER CLEARANCE </string>
+    <string name="part_ms">Anticipated time of completion </string>
+
+    <string name="part_hs">BRAKING ACTION </string>
+    <string name="brd">Brakemeter-Dynometer </string>
+    <string name="grt">Grip tester </string>
+    <string name="mum">Mu-meter </string>
+    <string name="rft">Runway friction tester </string>
+    <string name="sfh">Surface friction tester (high-pressure tire) </string>
+    <string name="sfl">Surface friction tester (low-pressure tire) </string>
+    <string name="skh">Skiddometer (high-pressure tire) </string>
+    <string name="skl">Skiddometer (low-pressure tire) </string>
+    <string name="tap">Tapley meter </string>
+    <string name="good">GOOD </string>
+    <string name="medium">MEDIUM </string>
+    <string name="MG">MEDIUM TO GOOD </string>
+    <string name="poor">POOR </string>
+    <string name="MP">MEDIUM TO POOR</string>
+    <string name="utc">UTC </string>
+    <string name="space">SPACE </string>
 
 
     <string name="previous">previous</string>
