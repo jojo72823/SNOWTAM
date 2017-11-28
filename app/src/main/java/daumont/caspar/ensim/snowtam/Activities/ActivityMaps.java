@@ -51,7 +51,6 @@ public class ActivityMaps extends FragmentActivity implements GoogleMap.OnInfoWi
             if (extras.getString("listAirport") != null) {
                 list_airport = new Gson().fromJson(extras.getString("listAirport"), ListAirport.class);
             }
-
         }
 
         button_back = (Button) findViewById(R.id.button_back);

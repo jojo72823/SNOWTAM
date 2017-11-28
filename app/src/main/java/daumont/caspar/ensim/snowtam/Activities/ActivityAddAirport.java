@@ -249,8 +249,6 @@ public class ActivityAddAirport extends AppCompatActivity {
             convertViewProduit.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
 
-
-
                     if (list_empty) {
                         add_ground();
                     } else {
@@ -275,27 +273,17 @@ public class ActivityAddAirport extends AppCompatActivity {
                                 });
                         builder.create();
                         builder.show();
-
-
                     }
-
-
                 }
             });
-
-
             return convertViewProduit;
         }
 
         private class ViewHolder {
             TextView textView_name_ground;
             ImageView imageView;
-
         }
-
-
     }
-
 }
 
 
