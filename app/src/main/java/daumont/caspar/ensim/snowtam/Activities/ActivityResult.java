@@ -144,7 +144,7 @@ public class ActivityResult extends AppCompatActivity {
             }
         }
 
-        dataMyCustomAdapterGround = new MyCustomAdapterGround(activity, R.layout.list_layout_ground, arrayList_airport);
+        dataMyCustomAdapterGround = new MyCustomAdapterGround(activity, R.layout.list_layout_airport, arrayList_airport);
         listView_ground.setAdapter(dataMyCustomAdapterGround);
 
         //LISTENERS
@@ -208,7 +208,7 @@ public class ActivityResult extends AppCompatActivity {
             if (convertViewProduit == null) {
                 LayoutInflater vi = (LayoutInflater) getSystemService(
                         Context.LAYOUT_INFLATER_SERVICE);
-                convertViewProduit = vi.inflate(R.layout.list_layout_ground, null);
+                convertViewProduit = vi.inflate(R.layout.list_layout_airport, null);
 
                 //GET INTERFACE
                 holder = new MyCustomAdapterGround.ViewHolder();
@@ -233,7 +233,7 @@ public class ActivityResult extends AppCompatActivity {
                 public void onClick(View v) {
                     LayoutInflater factory = LayoutInflater.from(activity);
 
-                    final View alertDialogView = factory.inflate(R.layout.dialog_view_ground, null);
+                    final View alertDialogView = factory.inflate(R.layout.dialog_view_airport, null);
                     AlertDialog.Builder adb = new AlertDialog.Builder(activity);
 
                     id_position = position;

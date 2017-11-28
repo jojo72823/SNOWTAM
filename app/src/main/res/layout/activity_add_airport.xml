@@ -50,7 +50,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <include android:id="@+id/content"
-        layout="@layout/content_activity_add_ground" />
+        layout="@layout/content_activity_add_airport" />
 
 
     <android.support.design.widget.FloatingActionButton

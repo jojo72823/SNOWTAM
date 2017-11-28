@@ -61,7 +61,7 @@ public class ActivityAddAirport extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         //GET INTERFACE
-        setContentView(R.layout.activity_add_ground);
+        setContentView(R.layout.activity_add_airport);
         fab_result = (FloatingActionButton) findViewById(R.id.fab_result);
         fab_add = (FloatingActionButton) findViewById(R.id.fab_add);
         listView_airport = (ListView) findViewById(R.id.listView_ground);
@@ -80,7 +80,7 @@ public class ActivityAddAirport extends AppCompatActivity {
             if (extras.getString("listAirport") != null) {
                 listAirport = new Gson().fromJson(extras.getString("listAirport"), ListAirport.class);
                 arraylist_list_airport = listAirport.getListAirport();
-                dataMyCustomAdapterAirport = new MyCustomAdapterAirport(activity, R.layout.list_layout_ground, arraylist_list_airport);
+                dataMyCustomAdapterAirport = new MyCustomAdapterAirport(activity, R.layout.list_layout_airport, arraylist_list_airport);
             }
         }else{
             initialize_listView_empty();
@@ -118,7 +118,7 @@ public class ActivityAddAirport extends AppCompatActivity {
         ArrayList<Airport> list_tmp = new ArrayList<>();
         list_tmp.add(new Airport(getString(R.string.add_ground)));
         list_empty = true;
-        dataMyCustomAdapterAirport = new MyCustomAdapterAirport(activity, R.layout.list_layout_ground, list_tmp);
+        dataMyCustomAdapterAirport = new MyCustomAdapterAirport(activity, R.layout.list_layout_airport, list_tmp);
         listView_airport.setAdapter(dataMyCustomAdapterAirport);
     }
 
@@ -127,13 +127,13 @@ public class ActivityAddAirport extends AppCompatActivity {
             listView_airport.setAdapter(null);
         }
 
-        dataMyCustomAdapterAirport = new MyCustomAdapterAirport(activity, R.layout.list_layout_ground, arraylist_list_airport);
+        dataMyCustomAdapterAirport = new MyCustomAdapterAirport(activity, R.layout.list_layout_airport, arraylist_list_airport);
         listView_airport.setAdapter(dataMyCustomAdapterAirport);
     }
 
     public void add_ground() {
         LayoutInflater factory = LayoutInflater.from(activity);
-        final View alertDialogView = factory.inflate(R.layout.dialog_add_ground, null);
+        final View alertDialogView = factory.inflate(R.layout.dialog_add_airport, null);
         AlertDialog.Builder adb = new AlertDialog.Builder(activity);
         adb.setCancelable(false);
         adb.setView(alertDialogView);
@@ -215,7 +215,7 @@ public class ActivityAddAirport extends AppCompatActivity {
             if (convertViewProduit == null) {
                 LayoutInflater vi = (LayoutInflater) getSystemService(
                         Context.LAYOUT_INFLATER_SERVICE);
-                convertViewProduit = vi.inflate(R.layout.list_layout_ground, null);
+                convertViewProduit = vi.inflate(R.layout.list_layout_airport, null);
 
                 //GET INTERFACE
                 holder = new ViewHolder();
