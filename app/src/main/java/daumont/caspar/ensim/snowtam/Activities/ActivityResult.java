@@ -924,11 +924,29 @@ public class ActivityResult extends AppCompatActivity {
 
                                         arrayList_airport.get(cptfinal).setLatLng(new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude)));
                                         String resultbegin =  arrayList_airport.get(cptfinal).getSnowtam_decoded();
-                                        Snowtam_partd[0] = "A) " +data;
-                                        String deco = Snowtam_partd[0]+"\n"+resultbegin;
-                                        arrayList_airport.get(cptfinal).setSnowtam_decoded(deco);
-                                        //Toast.makeText(activity, "A = " + part_ad, Toast.LENGTH_SHORT).show();
+                                        if(resultbegin != null) {
+                                            if (resultbegin.indexOf("A) ") != -1) {
+                                                String resultbegindef[] = resultbegin.split("[\n]");
+                                                String resultbeginTrue = "";
+                                                for (int j = 1; j < resultbegindef.length; j++) {
+                                                    resultbeginTrue += resultbegindef[j] + "\n";
+                                                }
+                                                Snowtam_partd[0] = "A) " + data;
+                                                String deco = Snowtam_partd[0] + "\n" + resultbeginTrue;
+                                                arrayList_airport.get(cptfinal).setSnowtam_decoded(deco);
 
+                                            } else {
+                                                Snowtam_partd[0] = "A) " + data;
+                                                String deco = Snowtam_partd[0] + "\n" + resultbegin;
+                                                arrayList_airport.get(cptfinal).setSnowtam_decoded(deco);
+
+                                            }
+                                        }
+                                        else{
+                                            Snowtam_partd[0] = "A) " + data;
+                                            String deco = Snowtam_partd[0] + "\n" + resultbegin;
+                                            arrayList_airport.get(cptfinal).setSnowtam_decoded(deco);
+                                        }
 
                                     }
                                 } catch (JSONException e) {
@@ -947,7 +965,7 @@ public class ActivityResult extends AppCompatActivity {
 
                 // Add JsonArrayRequest to the RequestQueue
                 try {
-                    Thread.sleep(100);
+                    Thread.sleep(500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
