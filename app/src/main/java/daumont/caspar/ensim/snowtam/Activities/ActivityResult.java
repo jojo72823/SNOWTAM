@@ -271,7 +271,7 @@ public class ActivityResult extends AppCompatActivity {
     }
 
     /**
-     * Synchronization of traitment
+     * Synchronization of Processing
      */
     private class Loading extends AsyncTask<Void, Void, Void> {
         @Override
