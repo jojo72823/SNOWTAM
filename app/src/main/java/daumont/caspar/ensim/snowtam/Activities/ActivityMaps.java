@@ -1,27 +1,14 @@
 package daumont.caspar.ensim.snowtam.Activities;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.AsyncTask;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -31,26 +18,21 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-
-import daumont.caspar.ensim.snowtam.Model.Ground;
-import daumont.caspar.ensim.snowtam.Model.ListGround;
+import daumont.caspar.ensim.snowtam.Model.Airport;
+import daumont.caspar.ensim.snowtam.Model.ListAirport;
 import daumont.caspar.ensim.snowtam.R;
 import daumont.caspar.ensim.snowtam.utils.Methods;
 
-public class ActivityMaps extends FragmentActivity implements GoogleMap.OnInfoWindowClickListener,OnMapReadyCallback {
+public class ActivityMaps extends FragmentActivity implements GoogleMap.OnInfoWindowClickListener, OnMapReadyCallback {
 
     private GoogleMap mMap;
     private Activity activity;
-    private Button button_next,button_back;
-
-    private ListGround list_ground;
+    private Button button_next, button_back;
+    private ListAirport list_airport;
     private ProgressDialog mProgressDialog;
     private int id_marker;
+    private boolean view_single_marker= false;
+    private Airport airport;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,29 +40,39 @@ public class ActivityMaps extends FragmentActivity implements GoogleMap.OnInfoWi
         setContentView(R.layout.activity_maps);
 
         activity = this;
-        id_marker=0;
+        id_marker = 0;
+
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            if (extras.getString("listGround") != null) {
-                list_ground = new Gson().fromJson(extras.getString("listGround"), ListGround.class);
+            if (extras.getString("airport") != null) {
+                view_single_marker = true;
+                airport = new Gson().fromJson(extras.getString("airport"), Airport.class);
+            }
+            if (extras.getString("listAirport") != null) {
+                list_airport = new Gson().fromJson(extras.getString("listAirport"), ListAirport.class);
+            }
+
+        }
+
+        button_back = (Button) findViewById(R.id.button_back);
+        button_next = (Button) findViewById(R.id.button_next);
+
+        if (view_single_marker) {
+            button_back.setVisibility(View.GONE);
+            button_next.setVisibility(View.GONE);
+        }else{
+            if(list_airport.getListAirport().size() <= 1){
+                button_back.setVisibility(View.GONE);
+                button_next.setVisibility(View.GONE);
             }
         }
 
-        button_back = (Button)findViewById(R.id.button_back);
-        button_next = (Button)findViewById(R.id.button_next);
-
-        if(list_ground.getListGround().size()==1){
-            button_back.setVisibility(View.GONE);
-            button_next.setVisibility(View.GONE);
-        }
 
         mProgressDialog = new ProgressDialog(activity);
         mProgressDialog.setTitle(getString(R.string.loading));
         mProgressDialog.setMessage(getString(R.string.loading_subtitle));
         mProgressDialog.setCancelable(false);
         mProgressDialog.setIndeterminate(false);
-
-
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -102,25 +94,32 @@ public class ActivityMaps extends FragmentActivity implements GoogleMap.OnInfoWi
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        for(int cpt=0;cpt<list_ground.getListGround().size();cpt++){
-            LatLng adress = list_ground.getListGround().get(cpt).getLatLng();
-            mMap.addMarker(new MarkerOptions().position(adress).title(list_ground.getListGround().get(cpt).getName()));
-
-
+        if (view_single_marker) {
+            LatLng adress = airport.getLatLng();
+            mMap.addMarker(new MarkerOptions().position(adress).title(airport.getName()));
+            //mMap.moveCamera(CameraUpdateFactory.newLatLng(airport.getLatLng()));
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(airport.getLatLng(), 12.0f));
+            mMap.setOnInfoWindowClickListener(this);
+        } else {
+            for (int cpt = 0; cpt < list_airport.getListAirport().size(); cpt++) {
+                LatLng adress = list_airport.getListAirport().get(cpt).getLatLng();
+                mMap.addMarker(new MarkerOptions().position(adress).title(list_airport.getListAirport().get(cpt).getName()));
+            }
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(list_airport.getListAirport().get(id_marker).getLatLng()));
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(list_airport.getListAirport().get(id_marker).getLatLng(), 12.0f));
+            mMap.setOnInfoWindowClickListener(this);
         }
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(list_ground.getListGround().get(id_marker).getLatLng()));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(list_ground.getListGround().get(id_marker).getLatLng(), 12.0f));
-        mMap.setOnInfoWindowClickListener(this);
+
 
         button_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(id_marker == 0){
-                    id_marker = list_ground.getListGround().size()-1;
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(list_ground.getListGround().get(id_marker).getLatLng(), 12.0f));
-                }else{
+                if (id_marker == 0) {
+                    id_marker = list_airport.getListAirport().size() - 1;
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(list_airport.getListAirport().get(id_marker).getLatLng(), 12.0f));
+                } else {
                     id_marker--;
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(list_ground.getListGround().get(id_marker).getLatLng(), 12.0f));
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(list_airport.getListAirport().get(id_marker).getLatLng(), 12.0f));
                 }
 
             }
@@ -129,12 +128,12 @@ public class ActivityMaps extends FragmentActivity implements GoogleMap.OnInfoWi
         button_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(id_marker == list_ground.getListGround().size()-1){
+                if (id_marker == list_airport.getListAirport().size() - 1) {
                     id_marker = 0;
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(list_ground.getListGround().get(id_marker).getLatLng(), 12.0f));
-                }else{
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(list_airport.getListAirport().get(id_marker).getLatLng(), 12.0f));
+                } else {
                     id_marker++;
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(list_ground.getListGround().get(id_marker).getLatLng(), 12.0f));
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(list_airport.getListAirport().get(id_marker).getLatLng(), 12.0f));
                 }
 
             }
@@ -157,14 +156,17 @@ public class ActivityMaps extends FragmentActivity implements GoogleMap.OnInfoWi
                 // Getting view from the layout file info_window_layout
                 View v = getLayoutInflater().inflate(R.layout.dialog_marker, null);
 
-
-                TextView textView_content = (TextView)v.findViewById(R.id.textView_content);
-
+                TextView textView_content = (TextView) v.findViewById(R.id.textView_content);
+                TextView textView_name = (TextView) v.findViewById(R.id.textView_name);
 
                 //INITIALIZE
-                textView_content.setText(list_ground.getListGround().get(0).getSnowtam_raw());
-
-
+                if (view_single_marker) {
+                    textView_name.setText(airport.getName());
+                    textView_content.setText(airport.getSnowtam_decoded());
+                }else{
+                    textView_name.setText(list_airport.getListAirport().get(id_marker).getName());
+                    textView_content.setText(list_airport.getListAirport().get(id_marker).getSnowtam_decoded());
+                }
 
 
                 return v;
@@ -181,17 +183,12 @@ public class ActivityMaps extends FragmentActivity implements GoogleMap.OnInfoWi
     public void retour() {
         if (Methods.internet_diponible(activity)) {
             Intent intent = new Intent(activity, ActivityResult.class);
-            intent.putExtra("listGround", new Gson().toJson(list_ground));
+            intent.putExtra("listAirport", new Gson().toJson(list_airport));
             startActivity(intent);
             overridePendingTransition(R.anim.pull_in_return, R.anim.push_out_return);
             finish();
         }
-
-
-
     }
-
-
 
     @Override
     public void onInfoWindowClick(Marker marker) {

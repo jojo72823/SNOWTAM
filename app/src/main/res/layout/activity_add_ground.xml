@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:background="@drawable/fond_petit"
-    tools:context="daumont.caspar.ensim.snowtam.Activities.ActivityAddGround">
+    tools:context="daumont.caspar.ensim.snowtam.Activities.ActivityAddAirport">
 
 
     <android.support.design.widget.AppBarLayout

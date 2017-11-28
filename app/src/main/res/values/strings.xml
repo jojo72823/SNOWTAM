@@ -15,6 +15,11 @@
     <string name="list_empty">No airport</string>
     <string name="loading">Please wait</string>
     <string name="loading_subtitle">Loading</string>
+    <string name="loading_crypt">Crypt</string>
+    <string name="loading_decrypt">Decrypt</string>
+    <string name="loading_maps">Maps</string>
+    <string name="pb_internet">This application need internet to work.</string>
+    <string name="close">Close</string>
 
     <string name="m">M </string>
     <string name="mm">mm </string>

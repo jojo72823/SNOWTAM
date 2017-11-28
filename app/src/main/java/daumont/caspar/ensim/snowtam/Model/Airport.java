@@ -8,20 +8,22 @@ import com.google.android.gms.maps.model.LatLng;
  * Created by jojo- on 14/11/2017.
  */
 
-public class Ground {
+public class Airport {
 
+    //ATTRIBUTS
     private String name;
-    private String data_crypt;
-
     private String snowtam_raw ;
 
     private String snowtam_decoded ;
     private LatLng latLng;
 
-    public Ground(String name){
+    //CONSTRUCTOR
+    public Airport(String name){
         this.name = name;
     }
 
+
+    //GET & SET
     public String getName() {
         return name;
     }
@@ -44,15 +46,6 @@ public class Ground {
 
     public void setSnowtam_decoded(String snowtam_decoded) {
         this.snowtam_decoded = snowtam_decoded;
-    }
-
-    public String getData_crypt() {
-        return data_crypt;
-    }
-
-    public void setData_crypt(String data_crypt) {
-        this.data_crypt = data_crypt;
-
     }
 
     public LatLng getLatLng() {

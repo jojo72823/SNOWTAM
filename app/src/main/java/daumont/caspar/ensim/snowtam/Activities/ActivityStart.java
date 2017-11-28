@@ -27,11 +27,11 @@ public class ActivityStart extends AppCompatActivity {
         activity = this;
 
         //LOADING
-        if (Methods.internet_diponible_activity_start(this)) {
+        if (Methods.internet_available_activity_start(this)) {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Intent intent = new Intent(activity, ActivityAddGround.class);
+                    Intent intent = new Intent(activity, ActivityAddAirport.class);
                     startActivity(intent);
                     overridePendingTransition(R.anim.pull_in, R.anim.push_out);
                     finish();
@@ -40,8 +40,8 @@ public class ActivityStart extends AppCompatActivity {
         } else {
             final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
             builder.setCancelable(false);
-            builder.setMessage("L'application a besoin d'internet pour fonctionner\nVeuillez l'activer.")
-                    .setPositiveButton("Fermer", new DialogInterface.OnClickListener() {
+            builder.setMessage(getString(R.string.pb_internet))
+                    .setPositiveButton(getString(R.string.close), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             dialog.cancel();
                             Intent intent = new Intent(activity, ActivityStart.class);

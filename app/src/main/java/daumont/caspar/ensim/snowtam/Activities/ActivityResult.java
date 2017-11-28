@@ -41,16 +41,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import daumont.caspar.ensim.snowtam.Model.Ground;
-import daumont.caspar.ensim.snowtam.Model.ListGround;
+import daumont.caspar.ensim.snowtam.Model.Airport;
+import daumont.caspar.ensim.snowtam.Model.ListAirport;
 import daumont.caspar.ensim.snowtam.R;
 import daumont.caspar.ensim.snowtam.utils.Methods;
 
 public class ActivityResult extends AppCompatActivity {
-    public String  [] Snowtam_partc = new String [17];
-    public String [] Snowtam_partd = new String [17];
-    public String data = "";
-    public Boolean find_snowtam = false;
+
     /**
      * ATTRIBUTES
      */
@@ -62,16 +59,22 @@ public class ActivityResult extends AppCompatActivity {
     private Toolbar toolbar;
     private CollapsingToolbarLayout toolbar_layout;
     private ProgressDialog mProgressDialog;
-    //ARRAYLIST
-    private ListGround list_ground;
-    private ArrayList<Ground> arrayList_ground;
+    //ARRAYLIST & TAB
+    private ListAirport list_airport;
+    private ArrayList<Airport> arrayList_airport;
+    public String  [] Snowtam_partc = new String [17];
+    public String [] Snowtam_partd = new String [17];
     //OTHER
     private Activity activity;
     private MyCustomAdapterGround dataMyCustomAdapterGround;
-
+    public String data = "";
+    public Boolean find_snowtam = false;
     private int id_position;
-
     private String resultat_chaine;
+
+    /**
+     * Declaration to use bottom menu
+     */
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -80,13 +83,22 @@ public class ActivityResult extends AppCompatActivity {
             if (Methods.internet_diponible(activity)) {
                 switch (item.getItemId()) {
                     case R.id.navigation_crypt:
-                        textView_content.setText(arrayList_ground.get(id_position).getSnowtam_raw());
+                        textView_content.setText(arrayList_airport.get(id_position).getSnowtam_raw());
 
                         return true;
                     case R.id.navigation_decrypt:
-                        textView_content.setText(arrayList_ground.get(id_position).getSnowtam_decoded());
+                        textView_content.setText(arrayList_airport.get(id_position).getSnowtam_decoded());
                         return true;
 
+                    case R.id.navigation_maps:
+                        Intent intent = new Intent(activity, ActivityMaps.class);
+                        intent.putExtra("listAirport", new Gson().toJson(list_airport));
+                        intent.putExtra("airport", new Gson().toJson(list_airport.getListAirport().get(id_position)));
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.pull_in, R.anim.push_out);
+                        finish();
+
+                        return true;
                 }
             }
 
@@ -95,6 +107,10 @@ public class ActivityResult extends AppCompatActivity {
 
     };
 
+    /**
+     * Create principal activity
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,6 +120,7 @@ public class ActivityResult extends AppCompatActivity {
         listView_ground = (ListView) findViewById(R.id.listView_ground);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar_layout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+        fab_maps = (FloatingActionButton) findViewById(R.id.fab_maps);
 
         //INITIALIZE
         activity = this;
@@ -116,44 +133,51 @@ public class ActivityResult extends AppCompatActivity {
         mProgressDialog.setIndeterminate(false);
         id_position = 0;
 
+
+        //GET params of activity
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            if (extras.getString("listGround") != null) {
-                list_ground = new Gson().fromJson(extras.getString("listGround"), ListGround.class);
-                arrayList_ground = list_ground.getListGround();
+            if (extras.getString("listAirport") != null) {
+                list_airport = new Gson().fromJson(extras.getString("listAirport"), ListAirport.class);
+                arrayList_airport = list_airport.getListAirport();
             }
         }
-        dataMyCustomAdapterGround = new MyCustomAdapterGround(activity, R.layout.list_layout_ground, arrayList_ground);
+
+        dataMyCustomAdapterGround = new MyCustomAdapterGround(activity, R.layout.list_layout_ground, arrayList_airport);
         listView_ground.setAdapter(dataMyCustomAdapterGround);
 
-
         //LISTENERS
-        fab_maps = (FloatingActionButton) findViewById(R.id.fab_maps);
-
         fab_maps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(activity, ActivityMaps.class);
-                intent.putExtra("listGround", new Gson().toJson(list_ground));
+                intent.putExtra("listAirport", new Gson().toJson(list_airport));
                 startActivity(intent);
                 overridePendingTransition(R.anim.pull_in, R.anim.push_out);
                 finish();
             }
         });
 
+        //Call of thread load result to get data & result of traitment
         new Loading().execute();
 
     }
 
+    /**
+     * Detect press of return button
+     */
     @Override
     public void onBackPressed() {
-        retour();
+        return_activity();
     }
 
-    public void retour() {
+    /**
+     * Function to change activity
+     */
+    public void return_activity() {
         if (Methods.internet_diponible(activity)) {
-            Intent intent = new Intent(activity, ActivityAddGround.class);
-            intent.putExtra("listGround", new Gson().toJson(list_ground));
+            Intent intent = new Intent(activity, ActivityAddAirport.class);
+            intent.putExtra("listAirport", new Gson().toJson(list_airport));
             startActivity(intent);
             overridePendingTransition(R.anim.pull_in_return, R.anim.push_out_return);
             finish();
@@ -161,13 +185,14 @@ public class ActivityResult extends AppCompatActivity {
 
     }
 
-    private class MyCustomAdapterGround extends ArrayAdapter<Ground> {
+    /**
+     * Generator elements of listView
+     */
+    private class MyCustomAdapterGround extends ArrayAdapter<Airport> {
 
-        private ArrayList<Ground> groupeList;
-
-
+        private ArrayList<Airport> groupeList;
         public MyCustomAdapterGround(Context context, int textViewResourceId,
-                                     ArrayList<Ground> groupeList) {
+                                     ArrayList<Airport> groupeList) {
             super(context, textViewResourceId, groupeList);
             this.groupeList = new ArrayList<>();
             this.groupeList.addAll(groupeList);
@@ -180,6 +205,7 @@ public class ActivityResult extends AppCompatActivity {
 
             MyCustomAdapterGround.ViewHolder holder;
 
+
             if (convertViewProduit == null) {
                 LayoutInflater vi = (LayoutInflater) getSystemService(
                         Context.LAYOUT_INFLATER_SERVICE);
@@ -189,25 +215,19 @@ public class ActivityResult extends AppCompatActivity {
                 holder = new MyCustomAdapterGround.ViewHolder();
                 holder.textView_name_ground = (TextView) convertViewProduit.findViewById(R.id.textView_name_ground);
                 holder.imageView = (ImageView) convertViewProduit.findViewById(R.id.imageView);
-                //INITIALIZE
-                convertViewProduit.setTag(holder);
-
-
                 holder.imageView.setImageResource(R.drawable.icon_plane);
 
-
+                //INITIALIZE
+                convertViewProduit.setTag(holder);
                 holder.textView_name_ground.setText(groupeList.get(position).getName());
-
 
             } else {
                 holder = (MyCustomAdapterGround.ViewHolder) convertViewProduit.getTag();
             }
 
-            //INITIALIZE
+            //SECOND INITIALIZE
             holder.textView_name_ground.setText(groupeList.get(position).getName());
-
             holder.imageView.setImageResource(R.drawable.icon_plane);
-
 
             //LISTENER
             convertViewProduit.setOnClickListener(new View.OnClickListener() {
@@ -226,10 +246,9 @@ public class ActivityResult extends AppCompatActivity {
                     navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
                     //INITIALIZE
-                    textView_content.setText(arrayList_ground.get(id_position).getSnowtam_decoded());
+                    textView_content.setText(arrayList_airport.get(id_position).getSnowtam_decoded());
                     adb.setView(alertDialogView);
                     final AlertDialog alertDialog = adb.show();
-
 
                     //LISTENER
                     button_close.setOnClickListener(new View.OnClickListener() {
@@ -249,12 +268,12 @@ public class ActivityResult extends AppCompatActivity {
         private class ViewHolder {
             TextView textView_name_ground;
             ImageView imageView;
-
         }
-
-
     }
 
+    /**
+     * Synchronization of traitment
+     */
     private class Loading extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {
@@ -264,11 +283,11 @@ public class ActivityResult extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... params) {
-            for (int cpt = 0; cpt < arrayList_ground.size(); cpt++) {
+            for (int cpt = 0; cpt < arrayList_airport.size(); cpt++) {
                 final int cptfinal = cpt;
                 // Initialize a new RequestQueue instance
                 RequestQueue requestQueue = Volley.newRequestQueue(activity);
-                String url = "https://v4p4sz5ijk.execute-api.us-east-1.amazonaws.com/anbdata/states/notams/notams-list?api_key=72b1ee30-cdce-11e7-8f50-f15f214edab3&format=json&type=&Qcode=&locations=" + arrayList_ground.get(cpt).getName() + "&qstring=&states=&ICAOonly=false";
+                String url = "https://v4p4sz5ijk.execute-api.us-east-1.amazonaws.com/anbdata/states/notams/notams-list?api_key=72b1ee30-cdce-11e7-8f50-f15f214edab3&format=json&type=&Qcode=&locations=" + arrayList_airport.get(cpt).getName() + "&qstring=&states=&ICAOonly=false";
                 // Initialize a new JsonArrayRequest instance
                 JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
                         Request.Method.GET,
@@ -277,9 +296,6 @@ public class ActivityResult extends AppCompatActivity {
                         new Response.Listener<JSONArray>() {
                             @Override
                             public void onResponse(JSONArray response) {
-                                // Do something with response
-                                //mTextView.setText(response.toString());
-
                                 // Process the JSON
                                 try {
                                     // Loop through the array elements
@@ -294,7 +310,7 @@ public class ActivityResult extends AppCompatActivity {
 
                                             find_snowtam = true;
 
-                                            //Part A Snowtam
+
                                             if (data.indexOf("A) ") != -1) {
                                                 String raw[] = data.split("A[)]");
                                                 String part_atab[] = raw[1].split("[\n]");
@@ -504,14 +520,9 @@ public class ActivityResult extends AppCompatActivity {
                                                 Snowtam_partc[16] = part_tab[0];
 
                                             }
-
                                         }
-
                                     }
-
-                                    //TODO
-                                    arrayList_ground.get(cptfinal).setSnowtam_raw(data);
-
+                                    arrayList_airport.get(cptfinal).setSnowtam_raw(data);
                                     find_snowtam = false;
 
                                     if (Snowtam_partc[1] != null) {
@@ -876,7 +887,7 @@ public class ActivityResult extends AppCompatActivity {
 
 
 
-                                    arrayList_ground.get(cptfinal).setSnowtam_decoded(resultat_chaine);
+                                    arrayList_airport.get(cptfinal).setSnowtam_decoded(resultat_chaine);
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -919,11 +930,11 @@ public class ActivityResult extends AppCompatActivity {
                                         String longitude = detail.getString("Longitude");
                                         String latitude = detail.getString("Latitude");
 
-                                        arrayList_ground.get(cptfinal).setLatLng(new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude)));
-                                        String resultbegin =  arrayList_ground.get(cptfinal).getSnowtam_decoded();
+                                        arrayList_airport.get(cptfinal).setLatLng(new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude)));
+                                        String resultbegin =  arrayList_airport.get(cptfinal).getSnowtam_decoded();
                                         Snowtam_partd[0] = "A) " +data;
                                         String deco = Snowtam_partd[0]+"\n"+resultbegin;
-                                        arrayList_ground.get(cptfinal).setSnowtam_decoded(deco);
+                                        arrayList_airport.get(cptfinal).setSnowtam_decoded(deco);
                                         //Toast.makeText(activity, "A = " + part_ad, Toast.LENGTH_SHORT).show();
 
 

@@ -3,9 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/SNOWTAM.iml" filepath="$PROJECT_DIR$/SNOWTAM.iml" />
-      <module fileurl="file://D:\AndroidProjets\SNOWTAMPROJET\SNOWTAM\SNOWTAM.iml" filepath="D:\AndroidProjets\SNOWTAMPROJET\SNOWTAM\SNOWTAM.iml" />
+      <module fileurl="file://D:/AndroidProjets/SNOWTAMPROJET/SNOWTAM/SNOWTAM.iml" filepath="D:/AndroidProjets/SNOWTAMPROJET/SNOWTAM/SNOWTAM.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://D:\AndroidProjets\SNOWTAMPROJET\SNOWTAM\app\app.iml" filepath="D:\AndroidProjets\SNOWTAMPROJET\SNOWTAM\app\app.iml" />
+      <module fileurl="file://D:/AndroidProjets/SNOWTAMPROJET/SNOWTAM/app/app.iml" filepath="D:/AndroidProjets/SNOWTAMPROJET/SNOWTAM/app/app.iml" />
     </modules>
   </component>
 </project>
