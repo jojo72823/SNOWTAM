@@ -64,6 +64,7 @@ public class ActivityResult extends AppCompatActivity {
     private ArrayList<Airport> arrayList_airport;
     public String  [] Snowtam_partc = new String [17];
     public String [] Snowtam_partd = new String [17];
+
     //OTHER
     private Activity activity;
     private MyCustomAdapterGround dataMyCustomAdapterGround;
@@ -196,8 +197,6 @@ public class ActivityResult extends AppCompatActivity {
             super(context, textViewResourceId, groupeList);
             this.groupeList = new ArrayList<>();
             this.groupeList.addAll(groupeList);
-
-
         }
 
         @Override
@@ -772,14 +771,14 @@ public class ActivityResult extends AppCompatActivity {
 
                                             }
                                             else if ((Integer.parseInt(instruction[i]) <= 29  && Integer.parseInt(instruction[i]) >= 26) || Integer.parseInt(instruction[i]) == 2) {
-                                            switch (i) {
-                                                case 0:
-                                                    Snowtam_partd[7] += getString(R.string.threshold) + getString(R.string.MP);
-                                                    break;
-                                                case 1:
-                                                    Snowtam_partd[7] += getString(R.string.mid_runway) + getString(R.string.MP);
-                                                    break;
-                                                 }
+                                                switch (i) {
+                                                    case 0:
+                                                        Snowtam_partd[7] += getString(R.string.threshold) + getString(R.string.MP);
+                                                        break;
+                                                    case 1:
+                                                        Snowtam_partd[7] += getString(R.string.mid_runway) + getString(R.string.MP);
+                                                        break;
+                                                }
 
 
                                             }
@@ -871,9 +870,6 @@ public class ActivityResult extends AppCompatActivity {
                                         Snowtam_partd[16] = "T) " + Snowtam_partc[16];
                                     }
 
-
-
-
                                     resultat_chaine = "";
 
                                     for(int i = 0; i < Snowtam_partd.length;i++ ) {
@@ -882,9 +878,6 @@ public class ActivityResult extends AppCompatActivity {
                                         }
 
                                     }
-
-
-
 
 
                                     arrayList_airport.get(cptfinal).setSnowtam_decoded(resultat_chaine);
@@ -903,11 +896,10 @@ public class ActivityResult extends AppCompatActivity {
                         }
                 );
                 // Add JsonArrayRequest to the RequestQueue
-
                 requestQueue.add(jsonArrayRequest);
 
                 RequestQueue requestQueue2 = Volley.newRequestQueue(activity);
-                String url2 = "https://v4p4sz5ijk.execute-api.us-east-1.amazonaws.com/anbdata/airports/locations/doc7910?api_key=72b1ee30-cdce-11e7-8f50-f15f214edab3&airports=" + arrayList_ground.get(cpt).getName() + "&format=json";
+                String url2 = "https://v4p4sz5ijk.execute-api.us-east-1.amazonaws.com/anbdata/airports/locations/doc7910?api_key=72b1ee30-cdce-11e7-8f50-f15f214edab3&airports=" + arrayList_airport.get(cpt).getName() + "&format=json";
                 // Initialize a new JsonArrayRequest instance
                 JsonArrayRequest jsonArrayRequest2 = new JsonArrayRequest(
                         Request.Method.GET,
